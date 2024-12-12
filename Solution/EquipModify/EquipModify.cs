@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System.IO;
+using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 
@@ -15,12 +16,23 @@ public class EquipModify : BaseUnityPlugin {
         harmony.PatchAll();
         Logger.LogInfo("Awake");
     }
-    void Initialize(){
+    public void OnStartCore() {
+        Logger.LogInfo("OnStartCore");
+        var dir = Path.GetDirectoryName(Info.Location);
+        var sources = Core.Instance.sources;
+
+        var itemDir = dir + "/Item/EquipModifyThingThing.xlsx";
+        ModUtil.ImportExcel(itemDir, "things", sources.things);
+
+		var recipeDir = dir + "/Recipe/EquipModifyRecipe.xlsx";
+		ModUtil.ImportExcel(recipeDir, "recipes", sources.recipes);
     }
+    void Initialize(){}
 }
 
 public static class EMUtils{
-    public static string ItemID = "";
+    public static string DispelPowderID = "sosarciel_dispel_powder";
+    public static string EnchantGemID = "sosarciel_enchant_gem";
 }
 
 
@@ -30,7 +42,7 @@ public static class EMUtils{
 public static class InvOwnerMod_ShouldShowGuide_Patch{
     private static bool Prefix(InvOwnerMod __instance, Thing t){
         var owner = __instance.owner;
-        if(owner.id != EMUtils.ItemID) return true;
+        if(owner.id != EMUtils.EnchantGemID) return true;
 
 
         
@@ -45,7 +57,7 @@ public static class InvOwnerMod_ShouldShowGuide_Patch{
 public static class InvOwnerMod__OnProcess_Patch{
     private static bool Prefix(InvOwnerMod __instance, Thing t){
         var owner = __instance.owner;
-        if(owner.id != EMUtils.ItemID) return true;
+        if(owner.id != EMUtils.EnchantGemID) return true;
 
         SE.Play("reloaded");
         EClass.pc.PlayEffect("identify");
