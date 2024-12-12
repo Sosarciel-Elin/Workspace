@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Wishing For Chara</title>
+  <id>WishingForChara</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>这个mod可以让你使用 regex (chara:|角色:)[CharName] 的形式许愿并生成一个角色
+如 "chara:朱亚" "角色:朱亚"
+角色名称可以参考汉化文件
+(如Elin/Package/_Lang_Chinese/Lang/CN/Game/Chara.xlsx 如果name栏为 <![CDATA[*r]]> 则代表使用 aka)
+
+
+
+
+This mod allows you to use the regex (chara:|角色:)[CharName] format to wish and generate a character.
+For example, "chara:Jure" or "角色:Jure".
+Character names can be referenced from the localization file
+(such as Elin/Package/_Lang_Chinese/Lang/CN/Game/Chara.xlsx, where if the name column contains <![CDATA[*r]]>, it means using aka).
+  </description>
+</Meta>

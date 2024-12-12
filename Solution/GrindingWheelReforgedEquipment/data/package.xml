@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Reforged Equipment</title>
+  <id>GrindingWheelReforgedEquipment</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>这个mod添加了三个配方, 让你可以在[枪身加工机]上, 使用[研磨剂], 重新随机装备属性
+所有属性只会在比处理前的值更高时才会实际应用, 并且会分别处理每一条属性
+(当前版本[砂轮机]的配方似乎有BUG会吞掉抛光物品,所以这里使用[枪身加工机],我不太确定正常抛光会不会吞物品,有人能试一下吗?)
+
+This mod adds three recipes, allowing you to use [polishing powder] on the [barrel processing machine] to reroll the equipment's attributes.
+Each attribute will only be applied if it is higher than its previous value, and each attribute is processed individually.
+(Currently, the [grinding whell] recipe seems to have a bug that consumes the polished item, so we use the [barrel processing machine] instead. I'm not sure if normal polishing will consume the item. Can someone test it?)
+  </description>
+</Meta>

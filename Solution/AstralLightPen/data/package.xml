@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Elona+ Astral Light Pen</title>
+  <id>AstralLightPen</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>添加了一个可将目标复制为队友的[星芒光笔]
+理论上只有许愿可以获得, 使用后会被消耗
+复制要求 目标好感度大于等于200 同时 玩家等级大于等于目标的一半
+
+如果 目标等级大于等于300 则会将目标的 属性,等级,技能 的值开平方
+算法为 attr = Pow(attr/a, b)
+
+两个条件与属性降低算法ab值均可在BepInEX配置中调整
+
+
+
+
+Added an [astral light pen] that can duplicate the target as a companion.
+It is theoretically only obtainable through wishing, and it will be consumed after use.
+The duplication requires the target's affinity to be greater than or equal to 200,
+and the player's level to be greater than or equal to half of the target's level.
+
+If the target's level is greater than or equal to 300,
+the target's attributes, level, and skills will be square-rooted.
+The calculation is: attr = Pow(attr / a, b)
+
+Both the conditions and the values for the attribute reduction algorithm (a and b) can be adjusted in the BepInEX configuration.
+  </description>
+</Meta>

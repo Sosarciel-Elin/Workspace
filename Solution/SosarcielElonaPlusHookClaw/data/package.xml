@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Elona+ Claw / Hook claw</title>
+  <id>elonaplus_hook_claw</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>添加了elonaplus中的钩爪
+面板属性基本遵从于elonaplus1.97
+类型为elin里的盾牌
+
+Added the claw/hook claw from elonaplus
+The panel attributes are basically in line with elonaplus1.97
+Category is shield in elin
+
+因为作者用offens.Length&lt;=2这种暴力的方式代替category=="shield"判断
+而shield尝试攻击将会出错
+所以此mod覆写了一些攻击计算代码:
+Thing.AddAttackEvaluation
+(CharaBody.GetAttackIndex
+ActMelee.Attack
+
+并在
+AttackProcess.Prepare
+AttackProcess.Perform
+内添加了一个尝试用盾牌攻击就会触发的消息提示
+  </description>
+</Meta>

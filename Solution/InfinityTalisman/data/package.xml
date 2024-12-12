@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Infinity Talisman</title>
+  <id>InfinityTalisman</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>这个mod提供了一个BepInEX配置文件 sosarciel.infinitytalisman.cfg
+允许你设置:
+PC无限灵符
+NPC无限灵符
+要求[灵符知识专长]才可无限灵符
+
+此mod主要目的是解决阴阳师队友灵符问题, 原游戏所有NPC所会的法术均为无限储量, 但灵符依然需要消耗武器灵符储量
+
+注意, 所有选项默认都不启用
+你需要手动在游戏安装目录的BepInEX配置(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.infinitytalisman.cfg")
+内更改配置使其生效
+
+
+
+
+This mod provides a BepInEX configuration file sosarciel.infinitytalisman.cfg that allows you to set the following options:
+Unlimited Talisman for PC
+Unlimited Talisman for NPC
+Require [Talisman Mastery] for unlimited Talisman
+
+The primary purpose of this mod is to address the Talisman issue for Onmyoji companions.
+In the original game, all NPC spells have unlimited supply, but Talismans still consume weapon Talisman reserves.
+
+Note: All options are disabled by default. You need to manually enable them by editing the configuration file in the game installation directory
+(e.g., SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.infinitytalisman.cfg).
+  </description>
+</Meta>

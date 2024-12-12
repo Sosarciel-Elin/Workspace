@@ -1,0 +1,57 @@
+﻿using BepInEx;
+using BepInEx.Logging;
+using HarmonyLib;
+
+
+[BepInPlugin("sosarciel.equipmodify", "EquipModify", "1.0.0.0")]
+[BepInProcess("Elin.exe")]
+public class EquipModify : BaseUnityPlugin {
+    public static new ManualLogSource Logger;
+
+    void Awake() {
+        Logger = base.Logger;
+        Initialize();
+        var harmony = new Harmony("EquipModify");
+        harmony.PatchAll();
+        Logger.LogInfo("Awake");
+    }
+    void Initialize(){
+    }
+}
+
+public static class EMUtils{
+    public static string ItemID = "";
+}
+
+
+[HarmonyPatch(typeof(InvOwnerMod))]
+[HarmonyPatch(nameof(InvOwnerMod.ShouldShowGuide))]
+[HarmonyPatch(new [] { typeof(Thing)})]
+public static class InvOwnerMod_ShouldShowGuide_Patch{
+    private static bool Prefix(InvOwnerMod __instance, Thing t){
+        var owner = __instance.owner;
+        if(owner.id != EMUtils.ItemID) return true;
+
+
+        
+        return false;
+    }
+}
+
+
+[HarmonyPatch(typeof(InvOwnerMod))]
+[HarmonyPatch(nameof(InvOwnerMod._OnProcess))]
+[HarmonyPatch(new [] { typeof(Thing)})]
+public static class InvOwnerMod__OnProcess_Patch{
+    private static bool Prefix(InvOwnerMod __instance, Thing t){
+        var owner = __instance.owner;
+        if(owner.id != EMUtils.ItemID) return true;
+
+        SE.Play("reloaded");
+        EClass.pc.PlayEffect("identify");
+        Msg.Say("modded", t, owner);
+        t.ApplySocket(owner.Thing);
+
+        return false;
+    }
+}
