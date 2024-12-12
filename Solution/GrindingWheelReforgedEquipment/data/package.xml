@@ -8,9 +8,25 @@
   <description>这个mod添加了三个配方, 让你可以在[枪身加工机]上, 使用[研磨剂], 重新随机装备属性
 所有属性只会在比处理前的值更高时才会实际应用, 并且会分别处理每一条属性
 (当前版本[砂轮机]的配方似乎有BUG会吞掉抛光物品,所以这里使用[枪身加工机],我不太确定正常抛光会不会吞物品,有人能试一下吗?)
+同时提供了一个BepInEx配置文件
+(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.grindingwheelreforgedequipment.cfg")
+允许你设置:
+一次校准即可达到最大值
+
+注意: 这个mod不会考虑轻量化卷轴导致的伤害与命中, 轻量化会彻底改变基础值, 且不记录次数
+
+
+
 
 This mod adds three recipes, allowing you to use [polishing powder] on the [barrel processing machine] to reroll the equipment's attributes.
 Each attribute will only be applied if it is higher than its previous value, and each attribute is processed individually.
 (Currently, the [grinding whell] recipe seems to have a bug that consumes the polished item, so we use the [barrel processing machine] instead. I'm not sure if normal polishing will consume the item. Can someone test it?)
+It also provides a BepInEx configuration file
+(e.g., "SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.grindingwheelreforgedequipment.cfg")
+that allows you to set:
+One-time calibration reaches maximum value.
+
+Note: This mod does not account for the damage and hit changes caused by lightweight scrolls.
+Lightweight scrolls will completely alter the base values and do not track the number of uses.
   </description>
 </Meta>

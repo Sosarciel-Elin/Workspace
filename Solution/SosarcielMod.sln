@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipModify", "EquipModify\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrindingWheelReforgedEquipment", "GrindingWheelReforgedEquipment\GrindingWheelReforgedEquipment.csproj", "{2DC23293-D235-4112-97A6-13C529A4459C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureMultisize", "SecureMultisize\SecureMultisize.csproj", "{415E93C9-EA59-4162-88E9-BF6F03A057F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{2DC23293-D235-4112-97A6-13C529A4459C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DC23293-D235-4112-97A6-13C529A4459C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DC23293-D235-4112-97A6-13C529A4459C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{415E93C9-EA59-4162-88E9-BF6F03A057F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{415E93C9-EA59-4162-88E9-BF6F03A057F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{415E93C9-EA59-4162-88E9-BF6F03A057F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{415E93C9-EA59-4162-88E9-BF6F03A057F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

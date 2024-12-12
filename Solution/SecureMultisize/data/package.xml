@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Secure Multisize</title>
+  <id>SecureMultisize</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>此mod将使友方大型生物无法破坏帐篷内空间或是你的领土
+同时提供了一个BepInEx配置
+(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.securemultisize.cfg")
+允许你设置:
+允许大型生物破坏城市
+约束任何大型生物
+
+注意: 大型生物还是有可能会堵住你的道路, 所以请准备好传送法杖或类似的东西
+
+
+
+This mod prevents friendly large creatures from destroying tent interiors or your territory.
+It also provides a BepInEx configuration
+(e.g., SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.securemultisize.cfg).
+that allows you to set:
+Allows large creatures to destroy cities
+Restricts any large creatures
+
+Note: Large creatures may still block your paths, so be prepared with a teleport staff or similar items.
+  </description>
+</Meta>

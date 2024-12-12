@@ -13,6 +13,7 @@
 [祛魔粉]配方在[诺拉]处出售
 
 附魔槽位上限与是否允许为远程武器附魔可在BepInEx配置内调整
+(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
 
 
 
@@ -26,5 +27,6 @@ To remove enchantments from ranged weapons, you must first dismantle the modific
 The recipe for [dispel powder] is sold by [Nola].
 
 The maximum number of enchantment slots and whether to allow enchanting ranged weapons can be adjusted in the BepInEx configuration.
+(e.g., SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg).
   </description>
 </Meta>
