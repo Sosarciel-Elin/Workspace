@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Equip Modify</title>
+  <id>EquipModify</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>此mod提供了一个物品[祛魔粉]用其可在[枪身加工机]与任何装备合成, 清除其附魔
+且获得[附魔石], 使用[附魔石]则可像改造枪械一样对任何装备或武器添加附魔
+附魔槽位上限为15
+默认无法为远程武器附魔
+清除远程武器附魔需先将其改造卸下
+[祛魔粉]配方在[诺拉]处出售
+
+附魔槽位上限与是否允许为远程武器附魔可在BepInEx配置内调整
+
+
+
+
+This mod provides an item called [dispel powder],
+which can be combined with any equipment in the [barrel processing machine] to remove its enchantments.
+Upon using the [dispel powder], you will receive an [enchant gem].
+[enchant gem] can be used to add enchantments to any equipment or weapon, just like modifying firearms. The maximum number of enchantment slots is 15 by default.
+Enchanting ranged weapons is disabled by default.
+To remove enchantments from ranged weapons, you must first dismantle the modifications.
+The recipe for [dispel powder] is sold by [Nola].
+
+The maximum number of enchantment slots and whether to allow enchanting ranged weapons can be adjusted in the BepInEx configuration.
+  </description>
+</Meta>

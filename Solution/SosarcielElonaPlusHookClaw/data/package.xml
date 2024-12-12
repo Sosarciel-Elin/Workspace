@@ -15,10 +15,11 @@ Category is shield in elin
 
 因为作者用offens.Length&lt;=2这种暴力的方式代替category=="shield"判断
 而shield尝试攻击将会出错
-所以此mod覆写了一些攻击计算代码:
+所以此mod改写了一些攻击计算代码:
 Thing.AddAttackEvaluation
-(CharaBody.GetAttackIndex
 ActMelee.Attack
+覆写了:
+CharaBody.GetAttackIndex
 
 并在
 AttackProcess.Prepare
