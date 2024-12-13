@@ -51,22 +51,27 @@ public class EquipModify : BaseUnityPlugin {
     void Initialize(){
         EMUtils.AllowEnchantRangedWeapons = base.Config.Bind<bool>("General", "AllowEnchantRangedWeapons", false,
             "允许附魔远程武器\nAllows enchanting ranged weapons");
+
         EMUtils.AllowEnchantThrowWeapons = base.Config.Bind<bool>("General", "AllowEnchantThrowWeapons", false,
             "允许附魔投掷武器\nAllows enchanting throw weapons");
 
         EMUtils.AllowEnchantFixedEquip = base.Config.Bind<bool>("General", "AllowEnchantFixedEquip", false,
 "允许附魔固定装备\nAllows enchanting of fixed equipment");
 
-        EMUtils.EnchantSlotLimitSuperior = base.Config.Bind<int>("General", "EnchantSlotLimitSuperior", 4, @"
-设置奇迹 (Superior) 稀有度装备附魔的最大槽位数。设置为小于0表示无限。
+        EMUtils.EnchantSlotLimitSuperior = base.Config.Bind<int>("General", "EnchantSlotLimitSuperior", 3, @"
+设置优质品 (Superior) 稀有度装备附魔的最大槽位数。设置为小于0表示无限。
 Sets the maximum number of slots that can be enchanted for Superior rarity items. Setting it to less than 0 means unlimited.
 ".Trim());
 
-        EMUtils.EnchantSlotLimitLegendary = base.Config.Bind<int>("General", "EnchantSlotLimitLegendary", 5, @"
-设置神器 (Legendary) 及以上稀有度装备附魔的最大槽位数。设置为小于0表示无限。
-Sets the maximum number of slots that can be enchanted for Legendary and above rarity items. Setting it to less than 0 means unlimited.
+        EMUtils.EnchantSlotLimitLegendary = base.Config.Bind<int>("General", "EnchantSlotLimitLegendary", 4, @"
+设置奇迹 (Legendary) 稀有度装备附魔的最大槽位数。设置为小于0表示无限。
+Sets the maximum number of slots that can be enchanted for Legendary rarity items. Setting it to less than 0 means unlimited.
 ".Trim());
 
+        EMUtils.EnchantSlotLimitMythical = base.Config.Bind<int>("General", "EnchantSlotLimitMythical", 5, @"
+设置神器 (Mythical) 及以上稀有度装备附魔的最大槽位数。设置为小于0表示无限。
+Sets the maximum number of slots that can be enchanted for Mythical and above rarity items. Setting it to less than 0 means unlimited.
+".Trim());
     }
 }
 
@@ -76,6 +81,7 @@ public static class EMUtils{
     public static ConfigEntry<bool> AllowEnchantFixedEquip;
     public static ConfigEntry<int> EnchantSlotLimitSuperior;
     public static ConfigEntry<int> EnchantSlotLimitLegendary;
+    public static ConfigEntry<int> EnchantSlotLimitMythical;
 
     public static string DispelPowderID = "sosarciel_dispel_powder";
     public static string EnchantGemID = "sosarciel_enchant_gem";
@@ -149,13 +155,16 @@ public static class EMUtils{
     }
 
     public static int GetEnchSlotCount(Thing t){
-        if(t.rarity < Rarity.Legendary) return 0;
-        if(t.rarity == Rarity.Legendary)
+        if(t.rarity < Rarity.Superior) return 0;
+        if(t.rarity == Rarity.Superior)
             return EnchantSlotLimitSuperior.Value < 0
                 ? Int16.MaxValue : EnchantSlotLimitSuperior.Value;
-        if(t.rarity >= Rarity.Mythical)
+        if(t.rarity == Rarity.Legendary)
             return EnchantSlotLimitLegendary.Value < 0
                 ? Int16.MaxValue : EnchantSlotLimitLegendary.Value;
+        if(t.rarity >= Rarity.Mythical)
+            return EnchantSlotLimitMythical.Value < 0
+                ? Int16.MaxValue : EnchantSlotLimitMythical.Value;
         return 0;
     }
 }

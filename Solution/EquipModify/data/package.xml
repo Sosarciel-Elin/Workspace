@@ -7,6 +7,7 @@
   <version>0.23.17</version>
   <description>此mod提供了一个物品[祛魔粉]用其可在[枪身加工机]与任何装备合成, 清除其附魔
 且获得[附魔石], 使用[附魔石]则可像改造枪械一样对任何装备或武器添加附魔
+优质品装备附魔上限默认为3
 奇迹装备附魔上限默认为4
 神器及以上附魔上限默认为5
 默认无法为远程武器投掷武器及固定装备附魔
@@ -23,14 +24,16 @@
 是否允许为投掷武器附魔
 是否允许为固定装备附魔
 
-注意: 目前, 如果将此mod排在最后可能会导致汉化文本失效, 可以尝试上调mod排序来解决问题, 或是订阅我的另一个mod
+注意: 目前, 如果将此mod排在最后可能会无法加载, 同时导致汉化文本失效
+可以尝试上调mod排序来解决问题, 或是订阅我的另一个mod
 Elona+ Astral Light Pen id=3382379925
 将mod排序调整为
 ...其他mod
 Equip Modify
 Elona+ Astral Light Pen
-结尾
+结尾(或是其他更多mod)
 也有可能解决问题
+
 
 
 
@@ -38,8 +41,9 @@ This mod provides an item called [dispel powder],
 which can be combined with any equipment in the [barrel processing machine] to remove its enchantments.
 Upon using the [dispel powder], you will receive an [enchant gem].
 [enchant gem] can be used to add enchantments to any equipment or weapon, just like modifying firearms.
-The enchantment slot limit for Superior equipment is 4 by default.
-The enchantment slot limit for Legendary and above is 5 by default.
+The enchantment slot limit for Superior equipment is 3 by default.
+The enchantment slot limit for Legendary equipment is 4 by default.
+The enchantment slot limit for Mythical and above is 5 by default.
 By default, ranged weapons, throwable weapons, and fixed equipment cannot be enchanted.
 To remove enchantments from equipment that has been modified, you need to first disassemble the modifications.
 Natural fixed enchantments of an item's style or material cannot be removed.
@@ -53,7 +57,7 @@ Whether to allow enchanting ranged weapons
 Whether to allow enchanting throwable weapons
 Whether to allow enchanting fixed equipment
 
-Note: Currently, placing this mod at the end may cause the localization text to become invalid.
+Warning: Currently, placing this mod at the end may prevent it from loading and cause the localization text to become invalid.
 You can try moving this mod up in the load order to solve the issue
 Or subscribe to my other mod
 Elona+ Astral Light Pen (id=3382379925).
@@ -61,7 +65,7 @@ Adjusting the mod order to:
 ...other mods
 Equip Modify
 Elona+ Astral Light Pen
-End
+End(or more other mods)
 may also resolve the issue.
   </description>
 </Meta>
