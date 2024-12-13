@@ -7,13 +7,21 @@
   <version>0.23.17</version>
   <description>此mod提供了一个物品[祛魔粉]用其可在[枪身加工机]与任何装备合成, 清除其附魔
 且获得[附魔石], 使用[附魔石]则可像改造枪械一样对任何装备或武器添加附魔
-附魔槽位上限为15
-默认无法为远程武器附魔
-清除远程武器附魔需先将其改造卸下
+奇迹装备附魔上限默认为6
+神器及以上附魔上限默认为8
+默认无法为远程武器投掷武器及固定装备附魔
+清除已安装改造的装备的附魔需先将其改造卸下
+物品样式或是材质的天然固定附魔无法被清除
 [祛魔粉]配方在[诺拉]处出售
 
-附魔槽位上限与是否允许为远程武器附魔可在BepInEx配置内调整
+
+在BepInEx配置内
 (如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
+允许你调整:
+附魔槽位上限
+是否允许为远程武器附魔
+是否允许为投掷武器附魔
+是否允许为固定装备附魔
 
 
 
@@ -21,12 +29,20 @@
 This mod provides an item called [dispel powder],
 which can be combined with any equipment in the [barrel processing machine] to remove its enchantments.
 Upon using the [dispel powder], you will receive an [enchant gem].
-[enchant gem] can be used to add enchantments to any equipment or weapon, just like modifying firearms. The maximum number of enchantment slots is 15 by default.
-Enchanting ranged weapons is disabled by default.
-To remove enchantments from ranged weapons, you must first dismantle the modifications.
+[enchant gem] can be used to add enchantments to any equipment or weapon, just like modifying firearms.
+The enchantment slot limit for Superior equipment is 6 by default.
+The enchantment slot limit for Legendary and above is 8 by default.
+By default, ranged weapons, throwable weapons, and fixed equipment cannot be enchanted.
+To remove enchantments from equipment that has been modified, you need to first disassemble the modifications.
+Natural fixed enchantments of an item's style or material cannot be removed.
 The recipe for [dispel powder] is sold by [Nola].
 
-The maximum number of enchantment slots and whether to allow enchanting ranged weapons can be adjusted in the BepInEx configuration.
-(e.g., SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg).
+In the BepInEx configuration file
+(e.g., "SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
+you can adjust:
+The maximum number of enchantment slots
+Whether to allow enchanting ranged weapons
+Whether to allow enchanting throwable weapons
+Whether to allow enchanting fixed equipment
   </description>
 </Meta>

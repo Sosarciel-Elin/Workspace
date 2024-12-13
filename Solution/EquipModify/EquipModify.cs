@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -6,6 +7,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using NPOI.SS.Formula.Functions;
 
 
 [BepInPlugin("sosarciel.equipmodify", "EquipModify", "1.0.0.0")]
@@ -18,18 +20,17 @@ public class EquipModify : BaseUnityPlugin {
         Initialize();
         var harmony = new Harmony("EquipModify");
         harmony.PatchAll();
-        Logger.LogInfo("Awake");
+        Logger.LogInfo("End Awake");
     }
     public void OnStartCore() {
         Logger.LogInfo("OnStartCore");
         var dir = Path.GetDirectoryName(Info.Location);
         var sources = Core.Instance.sources;
 
-        var itemDir = dir + "/Item/EquipModifyThing.xlsx";
-        ModUtil.ImportExcel(itemDir, "things", sources.things);
-
-		var recipeDir = dir + "/Recipe/EquipModifyRecipe.xlsx";
-		ModUtil.ImportExcel(recipeDir, "recipes", sources.recipes);
+        var tableDir = dir + "/EquipModifyTable.xlsx";
+        ModUtil.ImportExcel(tableDir, "things", sources.things);
+		ModUtil.ImportExcel(tableDir, "recipes", sources.recipes);
+        Logger.LogInfo("End OnStartCore");
     }
     void Start(){
         Logger.LogInfo("Start");
@@ -47,20 +48,36 @@ public class EquipModify : BaseUnityPlugin {
             enchantGem.unit = "个";
             enchantGem.detail = "用于给装备附魔的宝石。";
         }
+        Logger.LogInfo("End Start");
     }
     void Initialize(){
         EMUtils.AllowEnchantRangedWeapons = base.Config.Bind<bool>("General", "AllowEnchantRangedWeapons", false,
             "允许附魔远程武器\nAllows enchanting ranged weapons");
-        EMUtils.EnchantSlotLimit = base.Config.Bind<int>("General", "EnchantSlotLimit", 15, @"
-设置可以附魔的最大槽位数。设置为小于0表示无限。
-Sets the maximum number of slots that can be enchanted. Setting it to less than 0 means unlimited.
+        EMUtils.AllowEnchantThrowWeapons = base.Config.Bind<bool>("General", "AllowEnchantThrowWeapons", false,
+            "允许附魔投掷武器\nAllows enchanting throw weapons");
+
+        EMUtils.AllowEnchantFixedEquip = base.Config.Bind<bool>("General", "AllowEnchantFixedEquip", false,
+"允许附魔固定装备\nAllows enchanting of fixed equipment");
+
+        EMUtils.EnchantSlotLimitSuperior = base.Config.Bind<int>("General", "EnchantSlotLimitSuperior", 6, @"
+设置奇迹 (Superior) 稀有度装备附魔的最大槽位数。设置为小于0表示无限。
+Sets the maximum number of slots that can be enchanted for Superior rarity items. Setting it to less than 0 means unlimited.
 ".Trim());
+
+        EMUtils.EnchantSlotLimitLegendary = base.Config.Bind<int>("General", "EnchantSlotLimitLegendary", 8, @"
+设置神器 (Legendary) 及以上稀有度装备附魔的最大槽位数。设置为小于0表示无限。
+Sets the maximum number of slots that can be enchanted for Legendary and above rarity items. Setting it to less than 0 means unlimited.
+".Trim());
+
     }
 }
 
 public static class EMUtils{
-    public static ConfigEntry<int> EnchantSlotLimit;
     public static ConfigEntry<bool> AllowEnchantRangedWeapons;
+    public static ConfigEntry<bool> AllowEnchantThrowWeapons;
+    public static ConfigEntry<bool> AllowEnchantFixedEquip;
+    public static ConfigEntry<int> EnchantSlotLimitSuperior;
+    public static ConfigEntry<int> EnchantSlotLimitLegendary;
 
     public static string DispelPowderID = "sosarciel_dispel_powder";
     public static string EnchantGemID = "sosarciel_enchant_gem";
@@ -69,17 +86,19 @@ public static class EMUtils{
         //排除 DV PV DMG HIT
         List<int> excludedIds = new() { 64, 65, 66, 67 };
         return t.elements.ListElements(e =>
+            !e.IsGlobalElement &&(
             e.source.category == "skill" ||
             e.source.category == "enchant" ||
             e.source.category == "resist" ||
-            (e.source.category == "attribute" && !excludedIds.Contains(e.source.id)));
+            e.source.category == "ability" ||
+            (e.source.category == "attribute" && !excludedIds.Contains(e.source.id))));
     }
 
     public static void TryEjectEnchant(Thing t){
         //var _ = nameof(Thing.EjectSockets);
 
         //排除黑星
-        if(t.sourceCard.quality >= 4) return;
+        if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value) return;
 
         //排除未分解的远程武器
         if(t.sockets!=null){
@@ -105,6 +124,42 @@ public static class EMUtils{
             t.elements.ModBase(thing.refVal, -thing.encLV);
         });
     }
+
+    public static bool IsFixedEquip(Thing t){
+        if(t.sourceCard.quality >= 4)
+            return true;
+        if(t.rarity > Rarity.Legendary)
+            return true;
+        if(t.source.tag.Contains("godArtifact"))
+            return true;
+        return false;
+    }
+
+    public static bool IsCanBeModify(Thing t){
+        if (!t.IsMeleeWeapon && !t.IsEquipment && !t.IsRangedWeapon && !t.IsThrownWeapon)
+            return false;
+
+        if(t.IsRangedWeapon && !AllowEnchantRangedWeapons.Value)
+            return false;
+
+        if(t.IsRangedWeapon && !AllowEnchantThrowWeapons.Value)
+            return false;
+        if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value)
+            return false;
+
+        return true;
+    }
+
+    public static int GetEnchSlotCount(Thing t){
+        if(t.rarity < Rarity.Superior) return 0;
+        if(t.rarity == Rarity.Superior)
+            return EnchantSlotLimitSuperior.Value < 0
+                ? Int16.MaxValue : EnchantSlotLimitSuperior.Value;
+        if(t.rarity >= Rarity.Legendary)
+            return EnchantSlotLimitLegendary.Value < 0
+                ? Int16.MaxValue : EnchantSlotLimitLegendary.Value;
+        return 0;
+    }
 }
 
 
@@ -116,37 +171,31 @@ public static class InvOwnerMod_ShouldShowGuide_Patch{
         var owner = __instance.owner;
         if(owner.id != EMUtils.EnchantGemID) return true;
 
-        if (!t.IsMeleeWeapon && !t.IsEquipment && !t.IsRangedWeapon){
-            __result = false;
-            return false;
-        }
-        if(t.IsRangedWeapon && !EMUtils.AllowEnchantRangedWeapons.Value){
+        var enchId = owner.refVal;
+        var enchLv = owner.encLV;
+
+        if(!EMUtils.IsCanBeModify(t)){
             __result = false;
             return false;
         }
 
-        if(t.sourceCard.quality >= 4){
-            __result = false;
-            return false;
-        }
-
-        if(t.rarity < Rarity.Superior){
-            __result = false;
-            return false;
-        }
-
-        //并非重复附魔且满槽位
-        if(!t.elements.Has(owner.refVal)){
-            if(EMUtils.EnchantSlotLimit.Value>0 &&
-                EMUtils.ListEnchant(t).Count >= EMUtils.EnchantSlotLimit.Value){
+        if(t.elements.Has(enchId) && t.elements.GetElement(enchId).vBase > 0){
+            //原附魔值大于改造附魔值的物品
+            if(t.elements.GetElement(enchId).vBase >= enchLv){
+                __result = false;
+                return false;
+            }
+            //原附魔是全局效果
+            if(t.elements.GetElement(enchId).IsGlobalElement){
                 __result = false;
                 return false;
             }
         }
 
-        //原附魔值大于改造附魔值的物品
-        if(t.elements.Has(owner.refVal)){
-            if(t.elements.GetElement(owner.refVal).vBase >= owner.encLV){
+        //并非重复附魔且满槽位
+        if( !t.elements.Has(enchId) ||
+            (t.elements.Has(enchId) && t.elements.GetElement(enchId).vBase <= 0)){
+            if(EMUtils.ListEnchant(t).Count >= EMUtils.GetEnchSlotCount(t)){
                 __result = false;
                 return false;
             }
