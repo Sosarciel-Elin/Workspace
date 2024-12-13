@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Reflection.Emit;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using NPOI.SS.Formula.Functions;
 
 
 [BepInPlugin("sosarciel.equipmodify", "EquipModify", "1.0.0.0")]
@@ -86,7 +84,7 @@ public static class EMUtils{
         //排除 DV PV DMG HIT
         List<int> excludedIds = new() { 64, 65, 66, 67 };
         return t.elements.ListElements(e =>
-            !e.IsGlobalElement &&(
+            !e.IsGlobalElement && e.vBase>0 &&(
             e.source.category == "skill" ||
             e.source.category == "enchant" ||
             e.source.category == "resist" ||
