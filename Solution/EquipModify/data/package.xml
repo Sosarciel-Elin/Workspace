@@ -38,8 +38,8 @@ This mod provides an item called [dispel powder],
 which can be combined with any equipment in the [barrel processing machine] to remove its enchantments.
 Upon using the [dispel powder], you will receive an [enchant gem].
 [enchant gem] can be used to add enchantments to any equipment or weapon, just like modifying firearms.
-The enchantment slot limit for Superior equipment is 6 by default.
-The enchantment slot limit for Legendary and above is 8 by default.
+The enchantment slot limit for Superior equipment is 4 by default.
+The enchantment slot limit for Legendary and above is 5 by default.
 By default, ranged weapons, throwable weapons, and fixed equipment cannot be enchanted.
 To remove enchantments from equipment that has been modified, you need to first disassemble the modifications.
 Natural fixed enchantments of an item's style or material cannot be removed.
