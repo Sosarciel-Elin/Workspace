@@ -52,6 +52,12 @@ public class EquipModify : BaseUnityPlugin {
         Logger.LogInfo("End Start");
     }
     void Initialize(){
+        EMUtils.AllowSellEnchantmentGems = base.Config.Bind<bool>("General", "AllowSellEnchantmentGems", true,
+            "允许出售附魔石\nAllows selling enchantment gems");
+
+        EMUtils.AllowEnchantThrowWeapons = base.Config.Bind<bool>("General", "AllowEnchantThrowWeapons", false,
+            "允许附魔投掷武器\nAllows enchanting throw weapons");
+
         EMUtils.AllowEnchantRangedWeapons = base.Config.Bind<bool>("General", "AllowEnchantRangedWeapons", false,
             "允许附魔远程武器\nAllows enchanting ranged weapons");
 
@@ -79,6 +85,7 @@ Sets the maximum number of slots that can be enchanted for Mythical and above ra
 }
 
 public static class EMUtils{
+    public static ConfigEntry<bool> AllowSellEnchantmentGems;
     public static ConfigEntry<bool> AllowEnchantRangedWeapons;
     public static ConfigEntry<bool> AllowEnchantThrowWeapons;
     public static ConfigEntry<bool> AllowEnchantFixedEquip;
@@ -124,7 +131,8 @@ public static class EMUtils{
             if (!t.isCopy){
                 thing.refVal = e.id;
                 thing.encLV = enchLv;
-                thing.noSell = true;
+                if(!AllowSellEnchantmentGems.Value)
+                    thing.noSell = true;
             }
 
             EClass._map.TrySmoothPick(t.pos.IsBlocked ? EClass.pc.pos : t.pos, thing, EClass.pc);
@@ -149,7 +157,7 @@ public static class EMUtils{
         if(t.IsRangedWeapon && !AllowEnchantRangedWeapons.Value)
             return false;
 
-        if(t.IsRangedWeapon && !AllowEnchantThrowWeapons.Value)
+        if(t.IsThrownWeapon && !AllowEnchantThrowWeapons.Value)
             return false;
         if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value)
             return false;
@@ -270,7 +278,7 @@ class Trait_OnBarter_Patch {
         var matcher = new CodeMatcher(codes);
         matcher
             .MatchForward(false,
-                new (OpCodes.Pop),
+                //new (OpCodes.Pop),
                 new (OpCodes.Ldarg_0),
                 new (OpCodes.Ldstr, "break_powder"),
                 new (OpCodes.Call, AccessTools.Method(typeof(ThingGen), nameof(ThingGen.CreateRecipe))),

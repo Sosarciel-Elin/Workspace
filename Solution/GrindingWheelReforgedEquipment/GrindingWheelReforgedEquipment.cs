@@ -39,7 +39,7 @@ static class GWREUtil{
                 : EClass.rnd(val);
         }
 
-        //thing.ApplyMaterial
+        //var _ = nameof(Thing.ApplyMaterial);
         var sc = thing.sourceCard;
         var source = thing.source;
         if(sc.quality>=4 || thing.isReplica){

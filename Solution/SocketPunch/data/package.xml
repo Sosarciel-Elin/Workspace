@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Socket Punch</title>
+  <id>SocketPunch</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>此mod提供了一个物品[开孔工具]用其可在[枪身加工机]与武器合成, 为其增加改造槽
+优质装备槽位上限默认为4
+奇迹装备槽位上限默认为5
+神器装备槽位上限默认为6
+黑星装备槽位上限默认为2
+默认无法为不含有任何改造槽的装备开孔
+默认无法为衣服鞋子等非武器装备开孔
+[打孔工具]配方在[诺拉]处出售
+
+在BepInEx配置内
+(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
+允许你调整:
+打孔槽位上限
+是否允许为无孔武器开孔
+是否允许为非武器装备附魔
+
+注意: 目前, 如果将此mod排在最后可能会无法加载, 同时导致汉化文本失效
+可以尝试上调mod排序来解决问题, 或是订阅我的另一个mod
+Elona+ Astral Light Pen id=3382379925
+将mod排序调整为
+...其他mod
+Socket Punch
+Elona+ Astral Light Pen
+结尾(或是其他更多mod)
+也有可能解决问题
+
+
+
+
+This mod provides an item [socket punch],
+which can be used with the [barrel processing machine] to combine with weapons and add modification slots.
+The maximum slot limit for Superior equipment is set to 4 by default.
+The maximum slot limit for Legendary equipment is set to 5 by default.
+The maximum slot limit for Mythical equipment is set to 6 by default.
+The maximum slot limit for Artifact equipment is set to 2 by default.
+By default, socketing for equipment without any modification slots is not allowed.
+By default, socketing for non-weapon equipment like clothes and shoes is not allowed.
+The [socket punch] recipe is sold by [Nola].
+
+In the BepInEx configuration file
+(e.g., "SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
+you can adjust the following:
+Maximum socket slot limit
+Whether to allow socketing for weapons without sockets
+Whether to allow socketing for non-weapon equipment
+
+Warning: Currently, placing this mod at the end may prevent it from loading and cause the localization text to become invalid.
+You can try moving this mod up in the load order to solve the issue
+Or subscribe to my other mod
+Elona+ Astral Light Pen (id=3382379925).
+Adjusting the mod order to:
+...other mods
+Socket Punch
+Elona+ Astral Light Pen
+End(or more other mods)
+may also resolve the issue.
+  </description>
+</Meta>
