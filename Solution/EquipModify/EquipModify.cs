@@ -154,11 +154,12 @@ public static class EMUtils{
         if (!t.IsMeleeWeapon && !t.IsEquipment && !t.IsRangedWeapon && !t.IsThrownWeapon)
             return false;
 
-        if(t.IsRangedWeapon && !AllowEnchantRangedWeapons.Value)
+        if(t.IsRangedWeapon && !t.IsMeleeWeapon && !AllowEnchantRangedWeapons.Value)
             return false;
 
         if(t.IsThrownWeapon && !AllowEnchantThrowWeapons.Value)
             return false;
+
         if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value)
             return false;
 

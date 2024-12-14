@@ -50,7 +50,7 @@ public class SocketPunch : BaseUnityPlugin {
         SPUtils.AllowSocketForNoSocketWeapons = base.Config.Bind<bool>("General", "AllowSocketForNoSocketWeapons", false,
             "允许为无孔武器开孔\nAllows socketing for weapons without sockets");
         SPUtils.AllowSocketForEquipments = base.Config.Bind<bool>("General", "AllowSocketForEquipments", false,
-            "允许为装备开孔\nAllows socketing for equipments");
+            "允许为可穿戴装备开孔 (不包括近战武器) \nAllows socketing for wearable equipments (excluding melee weapons)");
         SPUtils.SocketSlotLimitSuperior = base.Config.Bind<int>("General", "SocketSlotLimitSuperior", 4, @"
 设置优质品 (Superior) 稀有度装备开孔的最大槽位数。设置为小于0表示无限。
 Sets the maximum number of slots that can be socketed for Superior rarity items. Setting it to less than 0 means unlimited.
@@ -67,6 +67,18 @@ Sets the maximum number of slots that can be socketed for Mythical rarity items.
 设置黑星 (Artifact) 稀有度装备开孔的最大槽位数。设置为小于0表示无限。
 Sets the maximum number of slots that can be socketed for Artifact rarity items. Setting it to less than 0 means unlimited.
 ".Trim());
+        SPUtils.SocketSlotLimitNonRangedWeapons = base.Config.Bind<int>("General", "SocketSlotLimitNonRangedWeapons", 2, @"
+设置非远程武器 (包括近战武器和投掷武器) 开孔的最大槽位数。设置为小于0表示无限。
+此值会在稀有度约束与类型约束之间取最低值。
+Sets the maximum number of slots that can be socketed for non-ranged weapons (including melee and thrown weapons). Setting it to less than 0 means unlimited.
+This value will take the minimum between rarity constraints and catrgory constraints.
+".Trim());
+        SPUtils.SocketSlotLimitWearableEquipments = base.Config.Bind<int>("General", "SocketSlotLimitWearableEquipments", 1, @"
+设置穿戴装备 (不包括近战武器) 开孔的最大槽位数。设置为小于0表示无限。
+此值会在稀有度约束与类型约束之间取最低值。
+Sets the maximum number of slots that can be socketed for wearable equipments (excluding melee weapons). Setting it to less than 0 means unlimited.
+This value will take the minimum between rarity constraints and catrgory constraints.
+".Trim());
     }
 }
 
@@ -77,10 +89,12 @@ public static class SPUtils{
     public static ConfigEntry<int> SocketSlotLimitLegendary;
     public static ConfigEntry<int> SocketSlotLimitMythical;
     public static ConfigEntry<int> SocketSlotLimitArtifact;
+    public static ConfigEntry<int> SocketSlotLimitNonRangedWeapons;
+    public static ConfigEntry<int> SocketSlotLimitWearableEquipments;
 
     public static string SocketPunchID = "sosarciel_socket_punch";
 
-    public static int GetEnchSlotCount(Thing t){
+    public static int GetEnchSlotCountForRarity(Thing t){
         if(t.rarity < Rarity.Superior) return 0;
         if(t.rarity == Rarity.Superior)
             return SocketSlotLimitSuperior.Value < 0
@@ -94,6 +108,15 @@ public static class SPUtils{
         if(t.rarity >= Rarity.Mythical)
             return SocketSlotLimitArtifact.Value < 0
                 ? Int16.MaxValue : SocketSlotLimitArtifact.Value;
+        return 0;
+    }
+    public static int GetEnchSlotCount(Thing t){
+        int baseVal = GetEnchSlotCountForRarity(t);
+        if(t.IsRangedWeapon && !t.IsMeleeWeapon) return baseVal;
+        if(t.IsMeleeWeapon || t.IsThrownWeapon)
+            return Math.Min(baseVal, SocketSlotLimitNonRangedWeapons.Value);
+        if(t.IsEquipment)
+            Math.Min(baseVal, SocketSlotLimitWearableEquipments.Value);
         return 0;
     }
     public static bool CanPunchSocket(Thing t){
