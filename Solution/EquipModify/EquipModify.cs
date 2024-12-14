@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -236,42 +239,71 @@ public static class InvOwnerMod__OnProcess_Patch{
 [HarmonyPatch(nameof(Trait.OnBarter))]
 class Trait_OnBarter_Patch {
     static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions){
+        try{
         EquipModify.Logger.LogInfo("EquipModify Trait_OnBarter_Patch");
         var codes = new List<CodeInstruction>(instructions);
         //foreach (var code in codes)
         //    EquipModify.Logger.LogInfo(code.ToString());
 
+        #region get token
+        List<string> codeStrings = codes.Select(code => code.ToString()).ToList();
+
+        string methodPattern = @"<OnBarter>g__AddThing";
+        Regex methodRegex = new(methodPattern);
+
+        string signaturePattern = @"Trait::(.+)\(";
+        Regex signatureRegex = new(signaturePattern);
+
+        string extractedMethodName = codeStrings
+            .Where(codeString => methodRegex.IsMatch(codeString))
+            .Select(codeString => signatureRegex.Match(codeString))
+            .Where(match => match.Success)
+            .Select(match => match.Groups[1].Value)
+            .FirstOrDefault();
+
+        EquipModify.Logger.LogInfo("match to: "+extractedMethodName);
+        var addThingMethod = AccessTools.DeclaredMethod(typeof(Trait), extractedMethodName);
+        if (addThingMethod == null) EquipModify.Logger.LogInfo("DeclaredMethod addThingMethod Failed");
+        #endregion
+
+        #region mod il
         var matcher = new CodeMatcher(codes);
-
-        // 手动获取正确的MethodInfo
-        // 使用 Harmony 的 AccessTools 来获取局部函数
-        var addThingMethod = AccessTools.DeclaredMethod(typeof(Trait), "<OnBarter>g__AddThing|349_1");
-        if (addThingMethod == null) EquipModify.Logger.LogInfo("addThingMethod Failed");
-
         matcher
             .MatchForward(false,
                 new (OpCodes.Pop),
                 new (OpCodes.Ldarg_0),
                 new (OpCodes.Ldstr, "break_powder"),
-                new (OpCodes.Call, AccessTools.Method(typeof(ThingGen), "CreateRecipe")),
+                new (OpCodes.Call, AccessTools.Method(typeof(ThingGen), nameof(ThingGen.CreateRecipe))),
                 new (OpCodes.Ldc_I4, 1000),
-                new (OpCodes.Callvirt, AccessTools.Method(typeof(Card), "SetPriceFix")),
+                new (OpCodes.Callvirt, AccessTools.Method(typeof(Card), nameof(Card.SetPriceFix))),
                 new (OpCodes.Ldloca_S, null),//new (OpCodes.Ldloca_S, 0),
                 new (OpCodes.Call, null)//new (OpCodes.Call, typeof(Trait).GetMethod("<OnBarter>g__AddThing|349_1")),
-            )
-            .Advance(1)
+            );
+
+        //matcher.MatchForward(false, new CodeMatch(OpCodes.Call, null));
+        //var addThingMethodInfo = matcher.Operand as MethodInfo;
+        //if (addThingMethodInfo == null)
+        //    EquipModify.Logger.LogInfo("Match addThingMethodInfo Failed");
+        //string methodName = addThingMethodInfo.Name;
+
+        matcher.Advance(1)
             .InsertAndAdvance(
                 //new (OpCodes.Pop),
                 new (OpCodes.Ldarg_0),
                 new (OpCodes.Ldstr, EMUtils.DispelPowderID),
-                new (OpCodes.Call, AccessTools.Method(typeof(ThingGen), "CreateRecipe")),
+                new (OpCodes.Call, AccessTools.Method(typeof(ThingGen), nameof(ThingGen.CreateRecipe))),
                 new (OpCodes.Ldc_I4, 1000),
-                new (OpCodes.Callvirt, AccessTools.Method(typeof(Card), "SetPriceFix")),
+                new (OpCodes.Callvirt, AccessTools.Method(typeof(Card), nameof(Card.SetPriceFix))),
                 new (OpCodes.Ldloca_S, 0),
                 new (OpCodes.Call, addThingMethod)
             );
+        #endregion
 
         return matcher.InstructionEnumeration();
+        }catch(Exception e){
+            EquipModify.Logger.LogError(e);
+            return instructions;
+        }
     }
 }
 
