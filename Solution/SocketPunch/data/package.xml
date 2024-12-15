@@ -15,7 +15,7 @@
 [打孔工具]配方在[诺拉]处出售
 
 在BepInEx配置内
-(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
+(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.socketpunch.cfg")
 允许你调整:
 打孔槽位上限
 是否允许为无孔武器开孔
@@ -45,7 +45,7 @@ By default, socketing for non-weapon equipment like clothes and shoes is not all
 The [socket punch] recipe is sold by [Nola].
 
 In the BepInEx configuration file
-(e.g., "SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.equipmodify.cfg")
+(e.g., "SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.socketpunch.cfg")
 you can adjust the following:
 Maximum socket slot limit
 Whether to allow socketing for weapons without sockets

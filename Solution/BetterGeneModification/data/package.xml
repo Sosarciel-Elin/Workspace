@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Better Gene Modification</title>
+  <id>BetterGeneModification</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>这个mod提供了一个BepInEX配置文件 sosarciel.bettergenemodification.cfg
+允许你设置:
+基因容量上限
+基因容量上限乘数
+移除基因的专长点数需求
+在移除基因时返还基因物品
+允许移除任何基因
+任何基因都只消耗1槽
+修改金属伤害计算(无论特性等级固定为1/10的伤害减免, 原版在为999级时能获得高达1/1000的不合理减免, 在1级时却又几乎不提供任何减免)
+修改硬件升级(玛尼的神器效果)为拥有魔导生命体专长(魔像种族专长)的单位提供增幅(原版仅有机械种族与玛尼使徒能获得增幅)
+移除防卫本能专长(圣骑士职业专长)的信仰限制
+
+注意, 所有选项默认都不启用
+你需要手动在游戏安装目录的BepInEX配置(如"SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.bettergenemodification.cfg")
+内更改配置使其生效
+
+
+
+
+This mod provides a BepInEX configuration file sosarciel.bettergenemodification.cfg that allows you to:
+Change the maximum gene capacity
+Gene count upper limit multiplier
+Remove the gene feat point requirement
+Return the gene item when a gene is removed
+Allows all genes to be removed
+Reduce gene slot consumption to 1 for any gene
+Modify metal damage calculation (fixed 1/10 damage reduction regardless of trait level; original version provided unreasonable 1/1000 reduction at level 999, and almost no reduction at level 1)
+Modify Hardware Upgrade (Mani artifact effect) to provide boost to units with the Arcane Core feat (Golem race feat); original version only provided boost to mechanical race and Mani apostles
+Remove the faith restriction for the Defensive Instinct feat (Paladin class feat)
+
+Note: All options are disabled by default.
+You need to manually change the configuration in the BepInEX config directory within your game installation folder
+(e.g., "SteamLibrary\steamapps\common\Elin\BepInEx\config\sosarciel.bettergenemodification.cfg")
+for them to take effect.
+  </description>
+</Meta>

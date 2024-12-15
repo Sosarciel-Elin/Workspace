@@ -193,8 +193,10 @@ public static class EMUtils{
         return enchMap;
     }
     public static int GetEnchLvExcludeSocket(Thing t, int enchId){
+        //var _ = nameof(AttackProcess.Perform);
         var enchMap = GetSocketEnch(t);
-        var vbase = t.elements.GetElement(enchId).vBase;
+        var vbase = t.elements.Has(enchId)
+            ? t.elements.GetElement(enchId).vBase : 0;
         if(enchMap.ContainsKey(enchId))
             return vbase - enchMap[enchId];
         return vbase;
