@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Critical Sure Hit</title>
+  <id>CriticalSureHit</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>此Mod覆写了CalcHit函数, 上调暴击判定时机到命中对抗前
+使你的暴击像ElonaPlus里那样必定能击中目标
+
+This mod overrides the CalcHit function, moving the critical hit check to occur before the hit/miss check.
+As a result, your critical hits will always hit the target, just like in ElonaPlus.
+  </description>
+</Meta>

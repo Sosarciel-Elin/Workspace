@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Material Change</title>
+  <id>EnchantCauseMaterialChange</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>当尝试强化武器/装备但强化溢出/超出强化卷轴可用上限时, 会让材质变换
+变换方式如下:
+
+先选择材质列表
+如果 不是高级强化卷轴 但 不是祝福的, 将选择 tier0 与 tier1 的材质组成的列表
+如果 不是高级强化卷轴 且 是祝福的, 将选择 tier1 与 tier2 的材质组成的列表
+如果 是高级强化卷轴 但 不是祝福的, 将选择 tier2 与 tier3 的材质组成的列表
+如果 是高级强化卷轴 且 是祝福的, 将选择 tier3 与 tier4 的材质组成的列表
+
+再从材质列表中选择材质id
+寻找列表中第一个 id 大于 当前id 的材质，如当前 id 为 0, 列表为 0,5,9 将找到 5
+如果当前材质id 不在选择的材质列表中, 将就近选择下一个, 如当前 id 为 1, 列表为 0,5,9 将找到 5
+如果当前材质id 大于等于列表内所有id, 则变为列表内的第一个, 如当前 id 为 9, 列表为 0,5,9 将找到 0
+
+最后将目标物品材质转换为确定的材质
+
+下面会附上可用材质表
+
+
+
+Material Transformation Process
+When attempting to enhance a weapon/armor but the enhancement exceeds the scroll's limit, the material will change as follows:
+
+Step 1: Select Material List
+If not using a high-level enhancement scroll and not blessed, choose the list of materials consisting of tier 0 and tier 1.
+If not using a high-level enhancement scroll but blessed, choose the list of materials consisting of tier 1 and tier 2.
+If using a high-level enhancement scroll but not blessed, choose the list of materials consisting of tier 2 and tier 3.
+If using a high-level enhancement scroll and blessed, choose the list of materials consisting of tier 3 and tier 4.
+
+Step 2: Select Material ID from the List
+Look for the first material ID in the list that is greater than the current ID. For example, if the current ID is 0 and the list is [0, 5, 9], the next ID would be 5.
+If the current material ID is not in the selected material list, choose the nearest next ID. For example, if the current ID is 1 and the list is [0, 5, 9], the next ID would be 5.
+If the current material ID is greater than or equal to all IDs in the list, reset to the first ID in the list. For example, if the current ID is 9 and the list is [0, 5, 9], the next ID would be 0.
+
+Step 3: Change the Material of the Target Item
+Transform the target item's material to the determined material.
+
+Available Material List
+Include the list of all available materials here for reference.
+
+
+
+
+id name name_EN name_JP altName altName_EN altName_JP tier
+1 橡木 oak オーク 生于森林的,木制的 forest,wooden 森から生まれし,木の 0
+2 铁 iron 鉄 被称作铁块的 mass 鉄塊と呼ばれる 1
+3 花岗岩 granite グラナイト 粉碎岩石的,石制的 rigid,stone 岩をも砕く,石の 0
+5 草 grass 草 练习用的 practice 練習用の 0
+8 沙 sand 砂 儿童玩具的 toy 子供のおもちゃの 0
+9 胶状物 jelly ゼリー 抖动的 trembling プルプルする 0
+10 生鲜 raw food 生もの 可食用的 edible 食用 0
+12 金 gold 金 金光闪耀的 golden 黄金に輝く 3
+13 银 silver 銀 粉碎黑暗的 dreadbane 闇を砕く 1
+14 铜 copper 銅 缠绕闪电的 lightning 雷を帯し 0
+15 青铜 bronze 青銅 高贵的 noble 気高き 1
+16 云母 mica ミカ 梦幻的 ephemeral 儚き 0
+17 铬铁 chromite クロム 揭示真相的 pure 真実を暴く 3
+18 钻石 diamond ダイヤ 恒久不变的 ever lasting うつろいなき 4
+19 红宝石 rubynus ルビナス 赤红如血的 crimson 赤く染まった 4
+20 钢 steel 鋼 历史悠久的 historic 由緒ある 2
+21 珊瑚 coral 珊瑚 来自海洋的 ocean 海からもたらされし 1
+22 硅砂 quartz sand 珪砂 闪亮的,玻璃的 glittering,glass さざめく,ガラスの 1
+23 水晶 crystal 水晶 绽放异彩的 luminescent 異光を放つ 2
+24 革 hide 革 包覆一切的 mysterious 全てを包む 2
+25 龙鳞 dragon scale 竜鱗 统帅龙族的 dragonbane 竜を統べし 4
+26 珍珠 pearl 真珠 照亮黑暗的 shining 闇を照らす 2
+27 绿宝石 emerald エメラルド 呼唤奇迹的 miracle 奇跡を呼ぶ 3
+29 精金 adamantite アダマンタイト 撼动大地的 earthshaking 大地を揺るがす 4
+39 白金 platinum 白金 被光芒包裹的 brilliant 光をまといし 2
+40 骨 bone 骨 不朽的 immortal 不死なる 0
+42 纸 paper 紙 古旧的 silly ふざけた 0
+43 以太 ether エーテル 永恒的 eternal 永遠なる 4
+55 黑曜石 obsidian 黒曜石 弒神的 godbane 神殺しの 1
+62 稻草 straw 藁 农活用的 farmwork 農作業用の 0
+68 秘银 mithril ミスリル 古老的 ancient 古なる 3
+69 钛 titanium タイタニアム 永不褪色的 unfading 色褪せぬ 4
+70 棉花 cotton 綿 轻巧的 lightweight 薄い 0
+71 丝绸 silk シルク 美丽的 beautiful 美しき 1
+72 鳞 scale 鱗 触怒逆鳞的 wrath 逆鱗に触れし 1
+73 山羊绒 cashmere カシミア 温暖的 warm 暖かなる 2
+74 柴隆纤维 zylon ザイロン 来自异国的 exotic 異国からもたらされし 3
+75 灵布 spirit cloth 霊布 不存于世的 otherworldly この世ならざる 3
+76 暮染 dawn cloth 宵晒 沐浴黄昏的 dusk 宵闇をまといし 4
+77 狮鹫鳞 griffon scale 翼鳥鱗 折翼的 fallen 翼を折られし 4
+78 塑料 plastic プラスチック 透明的 transparent 透き通った 1
+80 羊毛 wool ウール 柔软的 soft 柔らかい 2
+81 蜘蛛丝 spider silk 蜘蛛糸 纠缠的 entangled 絡みつく 2
+91 亚麻 hemp 麻 强韧的 tough 強靭なる 0
+99 紫水晶 amethyst アメジスト 妖艳的 bewitching 妖艶なる 3
+  </description>
+</Meta>
