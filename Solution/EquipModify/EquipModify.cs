@@ -100,7 +100,8 @@ public static class EMUtils{
         //排除 DV PV DMG HIT
         List<int> excludedIds = new() { 64, 65, 66, 67 };
         return t.elements.ListElements(e =>
-            !e.IsGlobalElement && e.vBase>0 &&(
+            !e.IsGlobalElement &&
+            GetEnchLvExcludeSocket(t,e.id)>0 && (
             e.source.category == "skill" ||
             e.source.category == "enchant" ||
             e.source.category == "resist" ||
@@ -114,22 +115,16 @@ public static class EMUtils{
         //排除黑星
         if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value) return;
 
-        //排除未分解的远程武器
-        if(t.sockets!=null){
-            for (int i = 0; i < t.sockets.Count; i++){
-                int num = t.sockets[i];
-                if (num != 0) return;
-            }
-        }
-
         var elementList = ListEnchant(t);
 
         elementList.ForEach(e=>{
-            var enchLv = e.vBase;
+            var enchId = e.id;
+            var enchLv = GetEnchLvExcludeSocket(t, enchId);
+
             if(enchLv<=0) return;
             Thing thing = ThingGen.Create(t.isCopy ? "ash3" : EnchantGemID);
             if (!t.isCopy){
-                thing.refVal = e.id;
+                thing.refVal = enchId;
                 thing.encLV = enchLv;
                 if(!AllowSellEnchantmentGems.Value)
                     thing.noSell = true;
@@ -179,6 +174,31 @@ public static class EMUtils{
                 ? Int16.MaxValue : EnchantSlotLimitMythical.Value;
         return 0;
     }
+
+    public static Dictionary<int,int> GetSocketEnch(Thing t){
+        var sockets = t.sockets;
+        //var _ = nameof(Thing.EjectSockets);
+        Dictionary<int,int> enchMap = new();
+        if(sockets==null) return enchMap;
+        for (int i = 0; i < sockets.Count; i++){
+            int num = sockets[i];
+            if (num != 0){
+                int enchId = num / 100;
+                int enchLv = num % 100;
+                if(!enchMap.ContainsKey(enchId))
+                    enchMap.Add(enchId, enchLv);
+                else enchMap[enchId] += enchLv;
+            }
+        }
+        return enchMap;
+    }
+    public static int GetEnchLvExcludeSocket(Thing t, int enchId){
+        var enchMap = GetSocketEnch(t);
+        var vbase = t.elements.GetElement(enchId).vBase;
+        if(enchMap.ContainsKey(enchId))
+            return vbase - enchMap[enchId];
+        return vbase;
+    }
 }
 
 
@@ -198,9 +218,9 @@ public static class InvOwnerMod_ShouldShowGuide_Patch{
             return false;
         }
 
-        if(t.elements.Has(enchId) && t.elements.GetElement(enchId).vBase > 0){
+        if(t.elements.Has(enchId) && EMUtils.GetEnchLvExcludeSocket(t,enchId) > 0){
             //原附魔值大于改造附魔值的物品
-            if(t.elements.GetElement(enchId).vBase >= enchLv){
+            if(EMUtils.GetEnchLvExcludeSocket(t,enchId) >= enchLv){
                 __result = false;
                 return false;
             }
@@ -213,7 +233,7 @@ public static class InvOwnerMod_ShouldShowGuide_Patch{
 
         //并非重复附魔且满槽位
         if( !t.elements.Has(enchId) ||
-            (t.elements.Has(enchId) && t.elements.GetElement(enchId).vBase <= 0)){
+            (t.elements.Has(enchId) && EMUtils.GetEnchLvExcludeSocket(t,enchId) <= 0)){
             if(EMUtils.ListEnchant(t).Count >= EMUtils.GetEnchSlotCount(t)){
                 __result = false;
                 return false;
@@ -238,7 +258,10 @@ public static class InvOwnerMod__OnProcess_Patch{
         SE.Play("reloaded");
         EClass.pc.PlayEffect("identify");
         Msg.Say("modded", t, owner);
-        t.elements.SetBase(owner.refVal, owner.encLV);
+        var enchId = owner.refVal;
+        var enchLv = owner.encLV + EMUtils.GetEnchLvExcludeSocket(t,owner.refVal);
+
+        t.elements.SetBase(enchId, enchLv);
         owner.Destroy();
         return false;
     }
