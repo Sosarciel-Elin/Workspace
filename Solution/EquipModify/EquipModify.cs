@@ -109,12 +109,13 @@ public static class EMUtils{
             (e.source.category == "attribute" && !excludedIds.Contains(e.source.id))));
     }
 
-    public static void TryEjectEnchant(Thing t){
+    public static bool TryEjectEnchant(Thing t){
         //var _ = nameof(Thing.EjectSockets);
 
         //排除黑星
-        if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value) return;
+        if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value) return false;
 
+        var ejected = false;
         var elementList = ListEnchant(t);
 
         elementList.ForEach(e=>{
@@ -132,7 +133,9 @@ public static class EMUtils{
 
             EClass._map.TrySmoothPick(t.pos.IsBlocked ? EClass.pc.pos : t.pos, thing, EClass.pc);
             t.elements.ModBase(thing.refVal, -thing.encLV);
+            ejected = true;
         });
+        return ejected;
     }
 
     public static bool IsFixedEquip(Thing t){
@@ -363,7 +366,10 @@ class TraitCrafter_Craft_Patch {
         switch (mixType){
             case TraitCrafter.MixType.Grind:
                 if (source.tag.Contains(EMUtils.EjectEnchantTag)){
-                    EMUtils.TryEjectEnchant(ai.ings[1]);
+                    if(EMUtils.TryEjectEnchant(ai.ings[1])){
+                        var copyT = ai.ings[0].Duplicate(1);
+                        EClass._map.TrySmoothPick(copyT.pos.IsBlocked ? EClass.pc.pos : copyT.pos, copyT, EClass.pc);
+                    }
                     ai.ings[0].ModNum(-1);
                     return false;
                 }

@@ -95,7 +95,7 @@ public static class SPUtils{
     public static string SocketPunchID = "sosarciel_socket_punch";
 
     public static int GetEnchSlotCountForRarity(Thing t){
-        if(t.rarity < Rarity.Superior) return 0;
+        if(t.rarity < Rarity.Superior) return 1;
         if(t.rarity == Rarity.Superior)
             return SocketSlotLimitSuperior.Value < 0
                 ? Int16.MaxValue : SocketSlotLimitSuperior.Value;
@@ -116,7 +116,7 @@ public static class SPUtils{
         if(t.IsMeleeWeapon || t.IsThrownWeapon)
             return Math.Min(baseVal, SocketSlotLimitNonRangedWeapons.Value);
         if(t.IsEquipment)
-            Math.Min(baseVal, SocketSlotLimitWearableEquipments.Value);
+            return Math.Min(baseVal, SocketSlotLimitWearableEquipments.Value);
         return 0;
     }
     public static bool CanPunchSocket(Thing t){
@@ -130,10 +130,11 @@ public static class SPUtils{
             return false;
         return true;
     }
-    public static void TryPunchSocket(Thing t){
+    public static bool TryPunchSocket(Thing t){
         if(!CanPunchSocket(t))
-            return;
+            return false;
         t.AddSocket();
+        return true;
     }
 }
 
@@ -231,7 +232,10 @@ class TraitCrafter_Craft_Patch {
         switch (mixType){
             case TraitCrafter.MixType.Grind:
                 if (source.tag.Contains(SPUtils.SocketPunchID)){
-                    SPUtils.TryPunchSocket(ai.ings[1]);
+                    if(!SPUtils.TryPunchSocket(ai.ings[1])){
+                        var copyT = ai.ings[0].Duplicate(1);
+                        EClass._map.TrySmoothPick(copyT.pos.IsBlocked ? EClass.pc.pos : copyT.pos, copyT, EClass.pc);
+                    }
                     ai.ings[0].ModNum(-1);
                     return false;
                 }
