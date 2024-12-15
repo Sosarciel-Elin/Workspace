@@ -9,7 +9,7 @@
 允许你设置:
 基因容量上限
 基因容量上限乘数
-移除基因的专长点数需求
+基因的专长点数乘数
 在移除基因时返还基因物品
 允许移除任何基因
 任何基因都只消耗1槽
@@ -27,7 +27,7 @@
 This mod provides a BepInEX configuration file sosarciel.bettergenemodification.cfg that allows you to:
 Change the maximum gene capacity
 Gene count upper limit multiplier
-Remove the gene feat point requirement
+Multiplier for gene feat points
 Return the gene item when a gene is removed
 Allows all genes to be removed
 Reduce gene slot consumption to 1 for any gene

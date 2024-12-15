@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using System.Reflection.Emit;
 using BepInEx.Logging;
+using UnityEngine;
 
 
 
@@ -21,8 +22,10 @@ public class BetterGeneModification : BaseUnityPlugin {
         harmony.PatchAll();
     }
     public void Initialize(){
-        BGMUtils.IgnoreFeat = base.Config.Bind<bool>("General", "IgnoreFeat", false,
-            "忽略基因专长点需求\nIgnore gene feat requirement");
+        BGMUtils.GeneFeatMultiplier = base.Config.Bind<float>("General", "GeneFeatMultiplier", 1.0f, @"
+基因专长点数乘数
+Multiplier for gene feat points.
+".Trim());
         BGMUtils.ReturnItemOnRemoval = base.Config.Bind<bool>("General", "ReturnItemOnRemoval", false,
             "移除基因时退还物品\nReturn item when gene is removed");
         BGMUtils.MaxGeneCount = base.Config.Bind<int>("General", "MaxGeneCount", -1,
@@ -75,7 +78,7 @@ Remove the faith restriction for the Defensive Instinct feat (Paladin class feat
 
 
 public static class BGMUtils{
-    public static ConfigEntry<bool> IgnoreFeat;
+    public static ConfigEntry<float> GeneFeatMultiplier;
     public static ConfigEntry<bool> ReturnItemOnRemoval;
     public static ConfigEntry<int> MaxGeneCount;
     public static ConfigEntry<float> MaxGeneCountMultiplier;
@@ -129,11 +132,10 @@ public static class Chara_MaxGene_post_Patch {
 [HarmonyPatch(MethodType.Getter)]
 public static class DNA_cost_Patch{
     public static bool Prefix(DNA __instance,ref int __result){
-        if(BGMUtils.IgnoreFeat.Value){
-            __result = 0;
-            return false;
-        }
-        return true;
+        var mul = BGMUtils.GeneFeatMultiplier.Value;
+        if(mul==1) return true;
+        __result = Mathf.CeilToInt(mul * __instance.ints[1]);
+        return false;
     }
 }
 
