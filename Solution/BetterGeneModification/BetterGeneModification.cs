@@ -91,8 +91,10 @@ public static class BGMUtils{
     public static ConfigEntry<bool> AllowRapidCastGeneDrop;
     public static ConfigEntry<bool> AllowRapidArrowGeneDrop;
 
-    public static Thing ReturnGene(Chara c,DNA dna){
+    public static Thing ReturnGene(DNA dna){
         Thing thing = ThingGen.Create((dna.type == DNA.Type.Brain) ? "gene_brain" : "gene");
+        Chara c = new();
+        c.Create(dna.id);
         thing.MakeRefFrom(c);
         thing.c_DNA = dna;
         thing.ChangeMaterial(dna.GetMaterialId(dna.type));
@@ -158,7 +160,7 @@ public static class CharaGenes_Remove_Patch{
     public static void Prefix(CharaGenes __instance, Chara c, DNA item){
         if (!BGMUtils.ReturnItemOnRemoval.Value)
             return;
-        var t = BGMUtils.ReturnGene(c, item);
+        var t = BGMUtils.ReturnGene(item);
         EClass.pc.AddThing(t);
     }
 }

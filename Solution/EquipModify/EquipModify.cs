@@ -366,7 +366,7 @@ class TraitCrafter_Craft_Patch {
         switch (mixType){
             case TraitCrafter.MixType.Grind:
                 if (source.tag.Contains(EMUtils.EjectEnchantTag)){
-                    if(EMUtils.TryEjectEnchant(ai.ings[1])){
+                    if(!EMUtils.TryEjectEnchant(ai.ings[1])){
                         var copyT = ai.ings[0].Duplicate(1);
                         EClass._map.TrySmoothPick(copyT.pos.IsBlocked ? EClass.pc.pos : copyT.pos, copyT, EClass.pc);
                     }
