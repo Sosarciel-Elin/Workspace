@@ -26,6 +26,10 @@ public class BetterGeneModification : BaseUnityPlugin {
 基因专长点数乘数
 Multiplier for gene feat points.
 ".Trim());
+        BGMUtils.GeneSynthesisTimeMultiplier = base.Config.Bind<float>("General", "GeneSynthesisTimeMultiplier", 1.0f, @"
+基因合成时间乘数
+Multiplier for gene synthesis time.
+".Trim());
         BGMUtils.ReturnItemOnRemoval = base.Config.Bind<bool>("General", "ReturnItemOnRemoval", false,
             "移除基因时退还物品\nReturn item when gene is removed");
         BGMUtils.MaxGeneCount = base.Config.Bind<int>("General", "MaxGeneCount", -1,
@@ -42,8 +46,9 @@ Allows all genes to be removed
 Note: In the base game, the Fox Maid gene cannot be removed after installation
 If this option is true, removing the gene will only remove 1 tail feat point, which means if you have multiple tails, you will still retain x-1 tails after removing the feat
 ".Trim());
-        BGMUtils.GeneSlotReduction = base.Config.Bind<bool>("General", "GeneSlotReduction", false,
-            "任何基因都只消耗1槽\nReduce gene slot consumption to 1 for any gene");
+        BGMUtils.GeneSlotMultiplier = base.Config.Bind<float>("General", "GeneSlotMultiplier", 1,
+            "基因槽位乘数\nMultiplier for gene slot consumption");
+
 
 
         BGMUtils.ModifyMetalDamageCalculation = base.Config.Bind<bool>("General", "ModifyMetalDamageCalculation", false,@"
@@ -79,11 +84,12 @@ Remove the faith restriction for the Defensive Instinct feat (Paladin class feat
 
 public static class BGMUtils{
     public static ConfigEntry<float> GeneFeatMultiplier;
+    public static ConfigEntry<float> GeneSynthesisTimeMultiplier;
     public static ConfigEntry<bool> ReturnItemOnRemoval;
     public static ConfigEntry<int> MaxGeneCount;
     public static ConfigEntry<float> MaxGeneCountMultiplier;
     public static ConfigEntry<bool> AllGeneCanRemove;
-    public static ConfigEntry<bool> GeneSlotReduction;
+    public static ConfigEntry<float> GeneSlotMultiplier;
     public static ConfigEntry<bool> ModifyMetalDamageCalculation;
     public static ConfigEntry<bool> ModifyHardwareUpgrade;
     public static ConfigEntry<bool> ModifyDefensiveInstinct;
@@ -169,12 +175,9 @@ public static class CharaGenes_Remove_Patch{
 [HarmonyPatch(nameof(DNA.slot))]
 [HarmonyPatch(MethodType.Getter)]
 public static class DNA_slot_Patch{
-    public static bool Prefix(DNA __instance,ref int __result){
-        if(BGMUtils.GeneSlotReduction.Value){
-            __result = 1;
-            return false;
-        }
-        return true;
+    public static void Postfix(DNA __instance,ref int __result){
+        if(BGMUtils.GeneSlotMultiplier.Value==1) return;
+        __result = Mathf.CeilToInt(__result * BGMUtils.GeneSlotMultiplier.Value);
     }
 }
 
@@ -338,5 +341,15 @@ public static class ElementContainerCard_ValueBonus_Patch{
         }
         }
         }
+    }
+}
+
+
+[HarmonyPatch(typeof(DNA))]
+[HarmonyPatch(nameof(DNA.GetDurationHour))]
+public static class DNA_GetDurationHour_Patch{
+    public static void Postfix(DNA __instance, ref int __result){
+        if (BGMUtils.GeneSynthesisTimeMultiplier.Value==1) return;
+        __result = Mathf.CeilToInt(__result * BGMUtils.GeneSynthesisTimeMultiplier.Value);
     }
 }
