@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketPunch", "SocketPunch\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterGeneModification", "BetterGeneModification\BetterGeneModification.csproj", "{44AD1F2F-793C-4EE7-A33F-5F454C973DE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreLoot", "MoreLoot\MoreLoot.csproj", "{D5C48942-61DD-422E-B6BE-6E5AA94BAFAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{44AD1F2F-793C-4EE7-A33F-5F454C973DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44AD1F2F-793C-4EE7-A33F-5F454C973DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44AD1F2F-793C-4EE7-A33F-5F454C973DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5C48942-61DD-422E-B6BE-6E5AA94BAFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5C48942-61DD-422E-B6BE-6E5AA94BAFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5C48942-61DD-422E-B6BE-6E5AA94BAFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5C48942-61DD-422E-B6BE-6E5AA94BAFAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
