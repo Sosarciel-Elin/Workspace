@@ -1,0 +1,38 @@
+[
+    {
+        "id": "sosarciel_dispel_powder",
+        "name_JP": "祓魔粉",
+        "name": "dispel powder",
+        "unit_JP": "袋",
+        "category": "_item",
+        "factory": ["machinebench"],
+        "components": ["polish_powder/10","crystal_mana"],
+        "defMat": "granite",
+        "_idRenderData": "@obj_S flat",
+        "value": 2600,
+        "LV": 20,
+        "chance": 25,
+        "weight": 50,
+        "tag": ["noQuality","noMaterialChange"],
+        "filter": ["gacha"],
+        "detail_JP": "この粉は装備の魔法付与を取り除くために使用されます",
+        "detail": "This powder is used to dispel enchantments from equipment."
+    },
+    {
+        "id": "sosarciel_enchant_gem",
+        "name_JP": "附魔石",
+        "name": "enchant gem",
+        "unit_JP": "個",
+        "category": "_item",
+        "components": ["log"],
+        "defMat": "iron",
+        "_idRenderData": "@obj_S flat",
+        "value": 1000,
+        "LV": 1,
+        "chance": 150,
+        "weight": 500,
+        "trait": ["ModRanged"],
+        "detail_JP": "装備にエンチャントを付与するための石。",
+        "detail": "A gem used for enchanting equipment."
+    }
+]

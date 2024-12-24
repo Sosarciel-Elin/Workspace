@@ -132,7 +132,7 @@ public static class EMUtils{
             }
 
             EClass._map.TrySmoothPick(t.pos.IsBlocked ? EClass.pc.pos : t.pos, thing, EClass.pc);
-            t.elements.ModBase(thing.refVal, -thing.encLV);
+            t.elements.ModBase(enchId, -enchLv);
             ejected = true;
         });
         return ejected;
