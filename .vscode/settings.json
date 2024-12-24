@@ -4,6 +4,10 @@
             "fileMatch": ["**/data/*Table/things.json"],
             "url": "./NodeJsTool/schema/SourceThingTable.schema.json"
         },
+        {
+            "fileMatch": ["**/data/*Table/recipes.json"],
+            "url": "./NodeJsTool/schema/SourceRecipeTable.schema.json"
+        },
     ],
     "dotnet.preferCSharpExtension": true
 }

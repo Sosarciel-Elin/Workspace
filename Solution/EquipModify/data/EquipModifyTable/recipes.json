@@ -1,0 +1,29 @@
+[
+    {
+        "id": 72900,
+        "factory":"BarrelMaker",
+        "type":"Grind",
+        "time": 15,
+        "ing1": ["sosarciel_dispel_powder"],
+        "ing2": ["#melee"],
+        "tag":["known","sosarciel_equipmodify_ejectenchant"]
+    },
+    {
+        "id": 72901,
+        "factory":"BarrelMaker",
+        "type":"Grind",
+        "time": 15,
+        "ing1": ["sosarciel_dispel_powder"],
+        "ing2": ["#armor"],
+        "tag":["known","sosarciel_equipmodify_ejectenchant"]
+    },
+    {
+        "id": 72902,
+        "factory":"BarrelMaker",
+        "type":"Grind",
+        "time": 15,
+        "ing1": ["sosarciel_dispel_powder"],
+        "ing2": ["#ranged"],
+        "tag":["known","sosarciel_equipmodify_ejectenchant"]
+    }
+]
