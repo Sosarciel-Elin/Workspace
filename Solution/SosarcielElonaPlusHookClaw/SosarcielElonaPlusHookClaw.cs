@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 
 [BepInPlugin("sosarciel.elonaplushookclaw", "SosarcielElonaPlusClaw", "1.0.0.0")]
 [BepInProcess("Elin.exe")]
@@ -132,8 +133,13 @@ public static class AttackProcess_Perform_Patch {
 [HarmonyPatch(new [] { typeof(float),typeof(bool) })]
 public static class ActMelee_Attack_Patch{
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions){
+        var codes = new List<CodeInstruction>(instructions);
+        //foreach (var code in codes)
+        //    SosarcielElonaPlusHookClaw.Logger.LogInfo(code.ToString());
+
         SosarcielElonaPlusHookClaw.Logger.LogInfo("SosarcielElonaPlusHookClaw ActMelee_Attack_Patch");
         //Debug.Log("ElonaPlusHookClaw.ActMelee_Attack_Patch Transpiler 1");
+        try{
         var matcher = new CodeMatcher(instructions,null);
         matcher.MatchForward(false, new CodeMatch[]{
             //new (OpCodes.Ldloc_S, 4),
@@ -151,12 +157,27 @@ public static class ActMelee_Attack_Patch{
 
         //Debug.Log("Operand");
         var label = matcher.Operand;
+
+        int operand = 0;
+        for(var i=0;i<20;i++){
+            //SosarcielElonaPlusHookClaw.Logger.LogInfo(codes[matcher.Pos-i].ToString());
+            var ldlocText = codes[matcher.Pos-7].ToString();
+            var match = Regex.Match(ldlocText, @"ldloc.+? (\d+)");
+            if(match.Success){
+                operand = int.Parse(match.Groups[1].Value);
+                break;
+            }
+            if(i==19) throw new Exception("cant match operand");
+        }
+
+        SosarcielElonaPlusHookClaw.Logger.LogInfo("Match label: "+label.ToString());
+        SosarcielElonaPlusHookClaw.Logger.LogInfo("Match locv: "+operand.ToString());
         //Debug.Log(label.ToString());
 
         //Debug.Log("ElonaPlusHookClaw.ActMelee_Attack_Patch Transpiler 3");
 
         matcher.Advance(1).InsertAndAdvance(new CodeInstruction[]{
-            new (OpCodes.Ldloc_S, 4),
+            new (OpCodes.Ldloc_S, operand),
             new (OpCodes.Ldfld, AccessTools.Field(typeof(BodySlot), "thing")),
             new (OpCodes.Ldfld, AccessTools.Field(typeof(Thing), "source")),
             new (OpCodes.Ldfld, AccessTools.Field(typeof(SourceThing.Row), "category")),
@@ -166,6 +187,10 @@ public static class ActMelee_Attack_Patch{
         });
         //Debug.Log("ElonaPlusHookClaw.ActMelee_Attack_Patch Transpiler 4");
         return matcher.InstructionEnumeration();
+        }catch(Exception e){
+            SosarcielElonaPlusHookClaw.Logger.LogError(e);
+            return instructions;
+        }
     }
 }
 
