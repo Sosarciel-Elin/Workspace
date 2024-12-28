@@ -96,7 +96,7 @@ public static class EMUtils{
     public static string DispelPowderID = "sosarciel_dispel_powder";
     public static string EnchantGemID = "sosarciel_enchant_gem";
     public static string EjectEnchantTag = "sosarciel_equipmodify_ejectenchant";
-    public static List<Element> ListEnchant(Thing t){
+    public static List<Element> ListEnchantExcludeSocket(Thing t){
         //排除 DV PV DMG HIT
         List<int> excludedIds = new() { 64, 65, 66, 67 };
         return t.elements.ListElements(e =>
@@ -116,7 +116,7 @@ public static class EMUtils{
         if(IsFixedEquip(t) && !AllowEnchantFixedEquip.Value) return false;
 
         var ejected = false;
-        var elementList = ListEnchant(t);
+        var elementList = ListEnchantExcludeSocket(t);
 
         elementList.ForEach(e=>{
             var enchId = e.id;
@@ -178,7 +178,7 @@ public static class EMUtils{
         return 0;
     }
 
-    public static Dictionary<int,int> GetSocketEnch(Thing t){
+    public static Dictionary<int,int> GetSocketEnchMap(Thing t){
         var sockets = t.sockets;
         //var _ = nameof(Thing.EjectSockets);
         Dictionary<int,int> enchMap = new();
@@ -195,9 +195,14 @@ public static class EMUtils{
         }
         return enchMap;
     }
+    public static int GetEnchLvOnlySocket(Thing t, int enchId){
+        var socketEnchMap = EMUtils.GetSocketEnchMap(t);
+        int socketEnch = socketEnchMap.ContainsKey(enchId) ? socketEnchMap[enchId] : 0;
+        return socketEnch;
+    }
     public static int GetEnchLvExcludeSocket(Thing t, int enchId){
         //var _ = nameof(AttackProcess.Perform);
-        var enchMap = GetSocketEnch(t);
+        var enchMap = GetSocketEnchMap(t);
         var vbase = t.elements.Has(enchId)
             ? t.elements.GetElement(enchId).vBase : 0;
         if(enchMap.ContainsKey(enchId))
@@ -239,7 +244,7 @@ public static class InvOwnerMod_ShouldShowGuide_Patch{
         //并非重复附魔且满槽位
         if( !t.elements.Has(enchId) ||
             (t.elements.Has(enchId) && EMUtils.GetEnchLvExcludeSocket(t,enchId) <= 0)){
-            if(EMUtils.ListEnchant(t).Count >= EMUtils.GetEnchSlotCount(t)){
+            if(EMUtils.ListEnchantExcludeSocket(t).Count >= EMUtils.GetEnchSlotCount(t)){
                 __result = false;
                 return false;
             }
@@ -264,7 +269,7 @@ public static class InvOwnerMod__OnProcess_Patch{
         EClass.pc.PlayEffect("identify");
         Msg.Say("modded", t, owner);
         var enchId = owner.refVal;
-        var enchLv = owner.encLV + EMUtils.GetEnchLvExcludeSocket(t,owner.refVal);
+        var enchLv = owner.encLV + EMUtils.GetEnchLvOnlySocket(t,enchId);
 
         t.elements.SetBase(enchId, enchLv);
         owner.Destroy();

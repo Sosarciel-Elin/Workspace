@@ -1,4 +1,4 @@
-using BepInEx;
+﻿using BepInEx;
 using HarmonyLib;
 using BepInEx.Configuration;
 using System.IO;
@@ -142,8 +142,12 @@ public static class TraitMagicChest_CanSearchContents_Getter_Patch{
 public static class UIInventory_Sort_Patch{
 	public static bool Prefix(UIInventory __instance, bool redraw){
 		if(!BSUtils.UseDictionaryBasedMerge.Value) return true;
-
-        UIList.SortMode i = (__instance.IsShop ? EMono.player.pref.sortInvShop : EMono.player.pref.sortInv);
+        UIList.SortMode i = __instance.IsShop
+            ? EMono.player.pref.sortInvShop
+            : (__instance.IsAdvSort
+                ? __instance.window.saveData.sortMode
+                : EMono.player.pref.sortInv);
+        //UIList.SortMode i = (__instance.IsShop ? EMono.player.pref.sortInvShop : EMono.player.pref.sortInv);
 
 		#region 合并同类物品
 		if(__instance.owner.Container.things.Count<=500){
@@ -196,13 +200,19 @@ public static class UIInventory_Sort_Patch{
         }
 
 		#region 排序
-        bool flag2 = (__instance.IsShop ? EMono.player.pref.sort_ascending_shop : EMono.player.pref.sort_ascending);
+        //bool flag2 = (__instance.IsShop ? EMono.player.pref.sort_ascending_shop : EMono.player.pref.sort_ascending);
+        bool flag2 = __instance.IsShop
+            ? EMono.player.pref.sort_ascending_shop
+            : (__instance.IsAdvSort
+                ? __instance.window.saveData.sort_ascending
+                : EMono.player.pref.sort_ascending);
 		if(i == UIList.SortMode.ByName){
 			__instance.owner.Container.things.Sort(delegate (Thing a, Thing b){
 				if (flag2) return string.Compare(a.GetName(NameStyle.FullNoArticle, 1), b.GetName(NameStyle.FullNoArticle, 1));
 				return string.Compare(b.GetName(NameStyle.FullNoArticle, 1), a.GetName(NameStyle.FullNoArticle, 1));
 			});
-		}else{
+		}
+        else{
 			__instance.owner.Container.things.Sort(delegate (Thing a, Thing b){
 				if (a.sortVal == b.sortVal) return b.SecondaryCompare(i, a);
 				return (!flag2) ? (a.sortVal - b.sortVal) : (b.sortVal - a.sortVal);
