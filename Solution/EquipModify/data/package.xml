@@ -23,6 +23,7 @@
 是否允许为投掷武器附魔
 是否允许为固定装备附魔
 是否允许出售附魔石
+允许无限制的叠加附魔
 
 注意: 目前, 如果将此mod排在最后可能会无法加载, 同时导致汉化文本失效
 可以尝试上调mod排序来解决问题, 或是订阅我的另一个mod
@@ -56,6 +57,7 @@ Whether to allow enchanting ranged weapons
 Whether to allow enchanting throwable weapons
 Whether to allow enchanting fixed equipment
 Whether to allow selling enchantment gems
+Allows unlimited enchantment stacking
 
 Warning: Currently, placing this mod at the end may prevent it from loading and cause the localization text to become invalid.
 You can try moving this mod up in the load order to solve the issue

@@ -65,7 +65,10 @@ public class EquipModify : BaseUnityPlugin {
             "允许附魔投掷武器\nAllows enchanting throw weapons");
 
         EMUtils.AllowEnchantFixedEquip = base.Config.Bind<bool>("General", "AllowEnchantFixedEquip", false,
-"允许附魔固定装备\nAllows enchanting of fixed equipment");
+            "允许附魔固定装备\nAllows enchanting of fixed equipment");
+
+        EMUtils.AllowUnlimitedEnchantStacking = base.Config.Bind<bool>("General", "AllowUnlimitedEnchantStacking", false,
+            "允许无限制的重复叠加附魔\nAllows unlimited enchantment stacking");
 
         EMUtils.EnchantSlotLimitSuperior = base.Config.Bind<int>("General", "EnchantSlotLimitSuperior", 3, @"
 设置优质品 (Superior) 稀有度装备附魔的最大槽位数。设置为小于0表示无限。
@@ -89,9 +92,11 @@ public static class EMUtils{
     public static ConfigEntry<bool> AllowEnchantRangedWeapons;
     public static ConfigEntry<bool> AllowEnchantThrowWeapons;
     public static ConfigEntry<bool> AllowEnchantFixedEquip;
+    public static ConfigEntry<bool> AllowUnlimitedEnchantStacking;
     public static ConfigEntry<int> EnchantSlotLimitSuperior;
     public static ConfigEntry<int> EnchantSlotLimitLegendary;
     public static ConfigEntry<int> EnchantSlotLimitMythical;
+
 
     public static string DispelPowderID = "sosarciel_dispel_powder";
     public static string EnchantGemID = "sosarciel_enchant_gem";
@@ -229,8 +234,8 @@ public static class InvOwnerMod_ShouldShowGuide_Patch{
         }
 
         if(t.elements.Has(enchId) && EMUtils.GetEnchLvExcludeSocket(t,enchId) > 0){
-            //原附魔值大于改造附魔值的物品
-            if(EMUtils.GetEnchLvExcludeSocket(t,enchId) >= enchLv){
+            //原附魔值大于改造附魔值的物品 不允许无限叠加
+            if(EMUtils.GetEnchLvExcludeSocket(t,enchId) >= enchLv && !EMUtils.AllowUnlimitedEnchantStacking.Value){
                 __result = false;
                 return false;
             }
@@ -269,9 +274,20 @@ public static class InvOwnerMod__OnProcess_Patch{
         EClass.pc.PlayEffect("identify");
         Msg.Say("modded", t, owner);
         var enchId = owner.refVal;
-        var enchLv = owner.encLV + EMUtils.GetEnchLvOnlySocket(t,enchId);
+        var enchLv = owner.encLV;
 
-        t.elements.SetBase(enchId, enchLv);
+
+        if(EMUtils.AllowUnlimitedEnchantStacking.Value){
+            var baseEnch = t.elements.Has(enchId)
+                ? t.elements.GetElement(enchId).vBase : 0;
+            t.elements.SetBase(enchId, enchLv+baseEnch);
+        }
+        else{
+            var socketEnch = EMUtils.GetEnchLvOnlySocket(t,enchId);
+            t.elements.SetBase(enchId, enchLv+socketEnch);
+        }
+
+
         owner.Destroy();
         return false;
     }
