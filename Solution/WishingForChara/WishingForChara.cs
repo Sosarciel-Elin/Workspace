@@ -45,12 +45,13 @@ class WishItem{
 
 [HarmonyPatch(typeof(ActEffect))]
 [HarmonyPatch(nameof(ActEffect.Wish))]
-[HarmonyPatch(new [] { typeof(string),typeof(string),typeof(int) })]
+[HarmonyPatch(new [] { typeof(string),typeof(string),typeof(int) ,typeof(BlessedState)})]
 public static class ActEffect_Wish_Patch{
-    private static bool Prefix(ActEffect __instance, string s, string name, int power){
+    private static bool Prefix(ActEffect __instance, string s, string name, int power, BlessedState state){
         string _s = s.ToLower();
 
         List<string> prefixes = new() { "chara:", "角色:" };
+        //Msg.Say(_s);
 
         if (!prefixes.Any(prefix => _s.StartsWith(prefix))) return true;
 
@@ -61,6 +62,7 @@ public static class ActEffect_Wish_Patch{
         string netMsg = GameLang.Parse("wish".langGame(), thirdPerson: true, name, s);
         bool net = EClass.core.config.net.enable && EClass.core.config.net.sendEvent;
         int wishLv = 10 + power / 4;
+        //Msg.Say(_s);
         foreach (CardRow r in EClass.sources.cards.rows){
             if (!r.isChara) continue;
             //if(!WFCUtils.AllowUnique.Value && r.idActor.Contains("unique")) continue;
