@@ -5,16 +5,35 @@
   <author>zwa73</author>
   <loadPriority>100</loadPriority>
   <version>0.23.17</version>
-  <description>如果你拥有 [变异体] 特性(变异人种族特性), 并且点了 [肉体变异] 特性, 同时当前除光源{肢体}外还有至少两个{肢体}
+  <description>这个mod提供了一种无需SL也能控制长出你想要的变异肢体的办法
+如果你拥有 [变异体] 特性(变异人种族特性), 并且点了 [肉体变异] 特性, 同时当前除光源{肢体}外还有至少两个{肢体}
 那么在产生 治疗变异/以太病 效果时, 若无可治疗项, 会随机治疗你的一个{肢体}, 同时扣除 [肉体变异] 并返还专长点
-治疗{肢体}之后，可能会出现一些ui上的装备槽类型错误以及装备乱位的问题
+
+会优先治疗未装备物品的{肢体}
+
+会尝试保留 1身体 1手
+
+治疗{肢体}之后, 可能会出现一些ui上的装备槽类型错误以及装备乱位的问题
 可以通过保存/加载，或是重进游戏修正
+(现已修复, 如果再次出现此问题请告诉我)
+
 (我不确定是否还有隐性问题, 因为实际上没有官方的减少方法, 同时ChangeRace指令也会产生相同问题)
 
+
+
+
+This mod provides a way to control the growth of desired mutated body parts without the need for save/loading (SL)
 If you have the [Mutating Body] trait (mutant racial trait) and have activated the [Mutation Body Part] trait, while having at least two {Body Parts} other than light source {Body Parts}
 Then during the occurrence of the Cure Mutation/Ether Disease effect, if there are no items to cure, a random {Body Part} will be cured. This will also remove the [Mutation Body Part] trait and return the feat points
+
+It will prioritize curing unequipped {Body Parts}
+
+It will attempt to retain one body and one hand
+
 After curing {Body Parts}, some UI equipment slot errors and equipment dislocation issues may occur
 These issues can be fixed by saving/loading or re-entering the game
+(This has now been fixed, but if you encounter this issue again, please let me know)
+
 (I am not sure if there are any latent issues, as there is no official method to reduce them, and the ChangeRace command can also cause the same issues)
   </description>
 </Meta>

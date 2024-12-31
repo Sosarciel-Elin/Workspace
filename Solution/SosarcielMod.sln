@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreLoot", "MoreLoot\MoreLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterStorageChest", "BetterStorageChest\BetterStorageChest.csproj", "{5DC3D51A-3834-4BD5-B625-2F3CDA165AEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CureMutationBodyPart", "CureMutationBodyPart\CureMutationBodyPart.csproj", "{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{5DC3D51A-3834-4BD5-B625-2F3CDA165AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DC3D51A-3834-4BD5-B625-2F3CDA165AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DC3D51A-3834-4BD5-B625-2F3CDA165AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
