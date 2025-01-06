@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterStorageChest", "Bette
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CureMutationBodyPart", "CureMutationBodyPart\CureMutationBodyPart.csproj", "{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveFaithLimitForFactionEquipmentPersonalVersion", "RemoveFaithLimitForFactionEquipmentPersonalVersion\RemoveFaithLimitForFactionEquipmentPersonalVersion.csproj", "{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50834D8-9201-4B97-AD64-A9F56AEDD5A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
