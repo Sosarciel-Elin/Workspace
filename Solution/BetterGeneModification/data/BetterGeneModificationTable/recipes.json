@@ -1,0 +1,11 @@
+[
+    {
+        "id": 73100,
+        "factory":"Mill",
+        "type":"None",
+        "time": 15,
+        "ing1": ["egg"],
+        "ing2": ["#drink"],
+        "tag":["known","sosarciel_mill_gene"]
+    }
+]

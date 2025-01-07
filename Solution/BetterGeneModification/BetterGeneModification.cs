@@ -71,14 +71,19 @@ Remove the faith restriction for the Defensive Instinct feat (Paladin class feat
         BGMUtils.AllowRapidArrowGeneDrop = base.Config.Bind<bool>("General", "AllowRapidArrowGeneDrop", false,
             "允许连续射击基因掉落 (无效) \nAllow Rapid Arrow gene drop (invalid)");
 
-        //CraftUtil.AddRandomFoodEnc
+        BGMUtils.AllowGeneCrafting = base.Config.Bind<bool>("General", "AllowGeneCrafting", false,
+            "允许制造基因\nAllow gene crafting");
     }
-    //public void OnStartCore() {
-    //    var dir = Path.GetDirectoryName(Info.Location);
-    //    var excel = dir + "/Recipe.xlsx";
-    //    var sources = Core.Instance.sources;
-    //    ModUtil.ImportExcel(excel, "recipes", sources.recipes);
-    //}
+    public void OnStartCore() {
+        Logger.LogInfo("OnStartCore");
+        if(BGMUtils.AllowGeneCrafting.Value){
+            var dir = Path.GetDirectoryName(Info.Location);
+            var sources = Core.Instance.sources;
+            var tableDir = dir + "/BetterGeneModificationTable.xlsx";
+            ModUtil.ImportExcel(tableDir, "recipes", sources.recipes);
+        }
+        Logger.LogInfo("End OnStartCore");
+    }
 }
 
 
@@ -96,6 +101,7 @@ public static class BGMUtils{
     public static ConfigEntry<bool> AllowBoostGeneDrop;
     public static ConfigEntry<bool> AllowRapidCastGeneDrop;
     public static ConfigEntry<bool> AllowRapidArrowGeneDrop;
+    public static ConfigEntry<bool> AllowGeneCrafting;
 
     public static Thing ReturnGene(DNA dna){
         Thing thing = ThingGen.Create((dna.type == DNA.Type.Brain) ? "gene_brain" : "gene");
@@ -108,9 +114,68 @@ public static class BGMUtils{
         //dna.GenerateWithGene
         return thing;
     }
+    public static string MillGeneTag = "sosarciel_mill_gene";
 }
 
-//[HarmonyPatch(nameof(TraitDrinkMilkMother.OnDrink))]
+[HarmonyPatch(typeof(TraitCrafter))]
+[HarmonyPatch(nameof(TraitCrafter.Craft))]
+[HarmonyPatch(new [] { typeof(AI_UseCrafter) })]
+class TraitCrafter_Craft_Patch_bgm {
+    public static bool Prefix(TraitCrafter __instance, AI_UseCrafter ai, ref Thing __result){
+        if(!BGMUtils.AllowGeneCrafting.Value) return true;
+
+        SourceRecipe.Row source = __instance.GetSource(ai);
+        if (source == null) return true;
+        //TraitGrindstone
+        //Recipe
+        if (!EClass.player.knownCraft.Contains(source.id)){
+            SE.Play("idea");
+            Msg.Say("newKnownCraft");
+            EClass.player.knownCraft.Add(source.id);
+            if ((bool)LayerDragGrid.Instance)
+                LayerDragGrid.Instance.info.Refresh();
+        }
+
+        TraitCrafter.MixType mixType = source.type.ToEnum<TraitCrafter.MixType>();
+        Thing t = null;
+        switch (mixType){
+            case TraitCrafter.MixType.Food:
+            case TraitCrafter.MixType.Resource:
+            case TraitCrafter.MixType.Dye:
+            case TraitCrafter.MixType.Butcher:
+            case TraitCrafter.MixType.Grind:
+            case TraitCrafter.MixType.Sculpture:
+            case TraitCrafter.MixType.Talisman:
+            case TraitCrafter.MixType.Scratch:
+            case TraitCrafter.MixType.Incubator:
+                break;
+            default:
+                //raitGodStatue.GetManiGene
+                //Thing.GenerateGene
+                //TraitDrinkMilkMother.OnDrink
+                if (source.tag.Contains(BGMUtils.MillGeneTag)){
+                    if (ai.ings[0].source != null){
+                        //t = ThingGen.Create("gene");
+                        var refcard = ai.ings[0].c_idRefCard;
+                        //CardRow r = SpawnList.Get("chara").Select(100);
+                        //Thing thing = DNA.GenerateGene(r, DNA.Type.Superior, owner.LV, owner.c_seed);
+                        //Msg.Say(refcard);
+                        //t.MakeRefFrom(refcard);
+                        //DNA dna = new DNA();
+                        Chara chara = CharaGen.Create(refcard,50 + EClass.pc.LV);
+                        t = chara.MakeGene(DNA.Type.Superior);
+                        //t.c_DNA = dna;
+                        //dna.GenerateWithGene(dna.GetRandomType(), t, chara);
+                        //t.c_DNA.GenerateWithGene(DNA.Type.Inferior, t);
+                    }
+                    __result = t;
+                    return false;
+                }
+                break;
+        }
+        return true;
+    }
+}
 
 [HarmonyPatch(typeof(Chara))]
 [HarmonyPatch(nameof(Chara.MaxGeneSlot))]
@@ -180,70 +245,6 @@ public static class DNA_slot_Patch{
         __result = Mathf.CeilToInt(__result * BGMUtils.GeneSlotMultiplier.Value);
     }
 }
-
-
-
-
-//[HarmonyPatch(typeof(TraitCrafter))]
-//[HarmonyPatch(nameof(TraitCrafter.Craft))]
-//[HarmonyPatch(new [] { typeof(AI_UseCrafter) })]
-//class TraitCrafter_Craft_Patch_bgm {
-//    public static bool Prefix(TraitCrafter __instance, AI_UseCrafter ai, ref Thing __result){
-//        SourceRecipe.Row source = __instance.GetSource(ai);
-//        if (source == null) return true;
-//        //TraitGrindstone
-//        //Recipe
-//        if (!EClass.player.knownCraft.Contains(source.id)){
-//            SE.Play("idea");
-//            Msg.Say("newKnownCraft");
-//            EClass.player.knownCraft.Add(source.id);
-//            if ((bool)LayerDragGrid.Instance)
-//                LayerDragGrid.Instance.info.Refresh();
-//        }
-//
-//        TraitCrafter.MixType mixType = source.type.ToEnum<TraitCrafter.MixType>();
-//        Thing t = null;
-//        switch (mixType){
-//            case TraitCrafter.MixType.Food:
-//            case TraitCrafter.MixType.Resource:
-//            case TraitCrafter.MixType.Dye:
-//            case TraitCrafter.MixType.Butcher:
-//            case TraitCrafter.MixType.Grind:
-//            case TraitCrafter.MixType.Sculpture:
-//            case TraitCrafter.MixType.Talisman:
-//            case TraitCrafter.MixType.Scratch:
-//            case TraitCrafter.MixType.Incubator:
-//                break;
-//            default:
-//                //raitGodStatue.GetManiGene
-//                //Thing.GenerateGene
-//                //TraitDrinkMilkMother.OnDrink
-//                if (source.tag.Contains("millgene")){
-//                    if (ai.ings[0].source != null){
-//                        //t = ThingGen.Create("gene");
-//                        var refcard = ai.ings[0].c_idRefCard;
-//                        CardRow r = SpawnList.Get("chara").Select(100);
-//                        //Thing thing = DNA.GenerateGene(r, DNA.Type.Superior, owner.LV, owner.c_seed);
-//                        //Msg.Say(refcard);
-//                        //t.MakeRefFrom(refcard);
-//                        //DNA dna = new DNA();
-//                        Chara chara = CharaGen.Create(refcard,50 + EClass.pc.Evalue(237));
-//                        t = chara.MakeGene();
-//                        //t.c_DNA = dna;
-//                        //dna.GenerateWithGene(dna.GetRandomType(), t, chara);
-//                        //t.c_DNA.GenerateWithGene(DNA.Type.Inferior, t);
-//                    }
-//                    __result = t;
-//                    return false;
-//                }
-//                break;
-//        }
-//        return true;
-//    }
-//}
-
-
-
 
 [HarmonyPatch(typeof(Card))]
 [HarmonyPatch(nameof(Card.DamageHP))]
