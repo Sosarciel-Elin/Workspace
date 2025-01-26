@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CureMutationBodyPart", "Cur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveFaithLimitForFactionEquipmentPersonalVersion", "RemoveFaithLimitForFactionEquipmentPersonalVersion\RemoveFaithLimitForFactionEquipmentPersonalVersion.csproj", "{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterBreeding", "BetterBreeding\BetterBreeding.csproj", "{DA0014AE-560D-4A60-8008-B1B1084527F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D583407-AA9F-48CC-BAD1-AB9786E5DBB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

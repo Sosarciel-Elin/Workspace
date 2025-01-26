@@ -120,7 +120,7 @@ public static class BGMUtils{
 [HarmonyPatch(typeof(TraitCrafter))]
 [HarmonyPatch(nameof(TraitCrafter.Craft))]
 [HarmonyPatch(new [] { typeof(AI_UseCrafter) })]
-class TraitCrafter_Craft_Patch_bgm {
+class TraitCrafter_Craft_Patch {
     public static bool Prefix(TraitCrafter __instance, AI_UseCrafter ai, ref Thing __result){
         if(!BGMUtils.AllowGeneCrafting.Value) return true;
 
@@ -128,52 +128,72 @@ class TraitCrafter_Craft_Patch_bgm {
         if (source == null) return true;
         //TraitGrindstone
         //Recipe
-        if (!EClass.player.knownCraft.Contains(source.id)){
-            SE.Play("idea");
-            Msg.Say("newKnownCraft");
-            EClass.player.knownCraft.Add(source.id);
-            if ((bool)LayerDragGrid.Instance)
-                LayerDragGrid.Instance.info.Refresh();
-        }
 
-        TraitCrafter.MixType mixType = source.type.ToEnum<TraitCrafter.MixType>();
-        Thing t = null;
-        switch (mixType){
-            case TraitCrafter.MixType.Food:
-            case TraitCrafter.MixType.Resource:
-            case TraitCrafter.MixType.Dye:
-            case TraitCrafter.MixType.Butcher:
-            case TraitCrafter.MixType.Grind:
-            case TraitCrafter.MixType.Sculpture:
-            case TraitCrafter.MixType.Talisman:
-            case TraitCrafter.MixType.Scratch:
-            case TraitCrafter.MixType.Incubator:
-                break;
-            default:
-                //raitGodStatue.GetManiGene
-                //Thing.GenerateGene
-                //TraitDrinkMilkMother.OnDrink
-                if (source.tag.Contains(BGMUtils.MillGeneTag)){
-                    if (ai.ings[0].source != null){
-                        //t = ThingGen.Create("gene");
-                        var refcard = ai.ings[0].c_idRefCard;
-                        //CardRow r = SpawnList.Get("chara").Select(100);
-                        //Thing thing = DNA.GenerateGene(r, DNA.Type.Superior, owner.LV, owner.c_seed);
-                        //Msg.Say(refcard);
-                        //t.MakeRefFrom(refcard);
-                        //DNA dna = new DNA();
-                        Chara chara = CharaGen.Create(refcard,50 + EClass.pc.LV);
-                        t = chara.MakeGene(DNA.Type.Superior);
-                        //t.c_DNA = dna;
-                        //dna.GenerateWithGene(dna.GetRandomType(), t, chara);
-                        //t.c_DNA.GenerateWithGene(DNA.Type.Inferior, t);
+        try {
+            if (!EClass.player.knownCraft.Contains(source.id)) {
+                SE.Play("idea");
+                Msg.Say("newKnownCraft");
+                EClass.player.knownCraft.Add(source.id);
+                if ((bool)LayerDragGrid.Instance)
+                    LayerDragGrid.Instance.info.Refresh();
+            }
+
+            TraitCrafter.MixType mixType = source.type.ToEnum<TraitCrafter.MixType>();
+            Thing t = null;
+            switch (mixType) {
+                case TraitCrafter.MixType.Food:
+                case TraitCrafter.MixType.Resource:
+                case TraitCrafter.MixType.Dye:
+                case TraitCrafter.MixType.Butcher:
+                case TraitCrafter.MixType.Grind:
+                case TraitCrafter.MixType.Sculpture:
+                case TraitCrafter.MixType.Talisman:
+                case TraitCrafter.MixType.Scratch:
+                case TraitCrafter.MixType.Incubator:
+                    break;
+                default:
+                    //raitGodStatue.GetManiGene
+                    //Thing.GenerateGene
+                    //TraitDrinkMilkMother.OnDrink
+                    if (source.tag.Contains(BGMUtils.MillGeneTag)) {
+                        var ing0 = ai.ings[0];
+                        if (ing0 == null) {
+                            Msg.Say("BetterGeneModification TraitCrafter_Craft_Patch 错误");
+                            Msg.Say("ing0 = " + ing0);
+                            __result = t;
+                            return false;
+                        }
+                        if (ing0.c_idRefCard != null) {
+                            //t = ThingGen.Create("gene");
+                            var refcard = ing0.c_idRefCard;
+                            //CardRow r = SpawnList.Get("chara").Select(100);
+                            //Thing thing = DNA.GenerateGene(r, DNA.Type.Superior, owner.LV, owner.c_seed);
+                            //Msg.Say(refcard);
+                            //t.MakeRefFrom(refcard);
+                            //DNA dna = new DNA();
+                            Chara chara = CharaGen.Create(refcard, 50 + EClass.pc.LV);
+                            t = chara.MakeGene(DNA.Type.Superior);
+                            //t.c_DNA = dna;
+                            //dna.GenerateWithGene(dna.GetRandomType(), t, chara);
+                            //t.c_DNA.GenerateWithGene(DNA.Type.Inferior, t);
+                        }
+                        if (t == null) {
+                            Msg.Say("BetterGeneModification TraitCrafter_Craft_Patch 错误");
+                            Msg.Say("ing0.c_idRefCard = " + ing0.c_idRefCard);
+                            __result = t;
+                            return false;
+                        }
+                        __result = t;
+                        return false;
                     }
-                    __result = t;
-                    return false;
-                }
-                break;
+                    break;
+            }
+            return true;
+        } catch (Exception ex){
+            Msg.Say("BetterGeneModification TraitCrafter_Craft_Patch 错误");
+            Msg.Say(ex.ToString());
+            return true;
         }
-        return true;
     }
 }
 
