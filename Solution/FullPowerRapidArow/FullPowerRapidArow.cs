@@ -28,9 +28,9 @@ public static class FPRAUtils{
 //[HarmonyPatch(nameof(ActRanged.Perform))]
 [HarmonyPatch(typeof(AttackProcess))]
 [HarmonyPatch(nameof(AttackProcess.Perform))]
-[HarmonyPatch(new[] { typeof(int), typeof(bool), typeof(float), typeof(bool) })]
+[HarmonyPatch(new[] { typeof(int), typeof(bool), typeof(float), typeof(bool), typeof(bool) })]
 public static class AttackProcess_Perform_Patch{
-    private static bool Prefix(AttackProcess __instance, int count, bool hasHit, float dmgMulti, bool maxRoll){
+    private static bool Prefix(AttackProcess __instance, int count, bool hasHit, float dmgMulti, bool maxRoll, bool subAttack){
         if(__instance.IsRanged && FPRAUtils.RapidFireNoFalloff.Value){
             Thing weapon = __instance.CC.ranged;
             if(weapon!=null){

@@ -124,9 +124,9 @@ public static class TraitMagicChest_CanOpenContainer_Getter_Patch{
 }
 
 [HarmonyPatch(typeof(TraitMagicChest))]
-[HarmonyPatch(nameof(TraitMagicChest.CanSearchContents))]
+[HarmonyPatch(nameof(TraitMagicChest.CanSearchContent))]
 [HarmonyPatch(MethodType.Getter)]
-public static class TraitMagicChest_CanSearchContents_Getter_Patch{
+public static class TraitMagicChest_CanSearchContent_Getter_Patch{
     public static bool Prefix(TraitMagicChest __instance, ref bool __result){
 		if(!BSUtils.OpenInTent.Value) return true;
 

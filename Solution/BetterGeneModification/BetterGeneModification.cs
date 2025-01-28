@@ -109,7 +109,7 @@ public static class BGMUtils{
         c.Create(dna.id);
         thing.MakeRefFrom(c);
         thing.c_DNA = dna;
-        thing.ChangeMaterial(dna.GetMaterialId(dna.type));
+        thing.ChangeMaterial(dna.GetMaterialId(dna.type),false);
         EClass.pc.Say("pick_thing", EClass.pc, thing, null, null);
         //dna.GenerateWithGene
         return thing;

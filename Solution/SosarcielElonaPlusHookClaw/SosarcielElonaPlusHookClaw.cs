@@ -115,9 +115,9 @@ public static class AttackProcess_Prepare_Patch {
 
 [HarmonyPatch(typeof(AttackProcess))]
 [HarmonyPatch(nameof(AttackProcess.Perform))]
-[HarmonyPatch(new [] { typeof(int),typeof(bool),typeof(float),typeof(bool) })]
+[HarmonyPatch(new [] { typeof(int),typeof(bool),typeof(float), typeof(bool), typeof(bool) })]
 public static class AttackProcess_Perform_Patch {
-    public static bool Prefix(AttackProcess __instance, int count, bool hasHit, float dmgMulti, bool maxRoll, ref bool __result) {
+    public static bool Prefix(AttackProcess __instance, int count, bool hasHit, float dmgMulti, bool maxRoll, bool subAttack, ref bool __result) {
         if(__instance.weapon!=null && __instance.weapon.source.category=="shield"){
             Msg.Say("ElonaPlusHookClaw.AttackProcess_Perform_Patch.Warning: Try shield attack");
             __result = false;
