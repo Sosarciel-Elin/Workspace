@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveFaithLimitForFactionE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterBreeding", "BetterBreeding\BetterBreeding.csproj", "{DA0014AE-560D-4A60-8008-B1B1084527F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyRaceCanBeAdam", "AnyRaceCanBeAdam\AnyRaceCanBeAdam.csproj", "{8E8D64A5-954F-40CF-90E1-2E71615221EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA0014AE-560D-4A60-8008-B1B1084527F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8D64A5-954F-40CF-90E1-2E71615221EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8D64A5-954F-40CF-90E1-2E71615221EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8D64A5-954F-40CF-90E1-2E71615221EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8D64A5-954F-40CF-90E1-2E71615221EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
