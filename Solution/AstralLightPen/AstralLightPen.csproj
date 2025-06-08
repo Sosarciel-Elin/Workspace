@@ -12,7 +12,6 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,34 +32,34 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\BepInEx\core\0Harmony.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Core">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\BepInEx\core\BepInEx.Core.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.Core.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Preloader.Core">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\BepInEx\core\BepInEx.Preloader.Core.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.Preloader.Core.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Preloader.Unity">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\BepInEx\core\BepInEx.Preloader.Unity.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.Preloader.Unity.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Unity">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\BepInEx\core\BepInEx.Unity.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Elin">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\Elin.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\Elin.dll</HintPath>
     </Reference>
     <Reference Include="NPOI">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\NPOI.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="Plugins">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\Plugins.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\Plugins.dll</HintPath>
     </Reference>
     <Reference Include="Plugins.BaseCore">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\Plugins.BaseCore.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\Plugins.BaseCore.dll</HintPath>
     </Reference>
     <Reference Include="Plugins.UI">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\Plugins.UI.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\Plugins.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,10 +70,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>I:\SteamLibrary\steamapps\common\Elin\Elin_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(GamePath)\Elin_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -82,15 +81,4 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>set DLL_PATH="$(TargetDir)$(TargetName).dll"
-set DEST_DIR="I:\SteamLibrary\steamapps\common\Elin\Package\Mod_$(ProjectName)\"
-set DATA_DIR="$(ProjectDir)data\*"
-set CS_FILES="$(ProjectDir)*.cs"
-
-xcopy "%25DLL_PATH%25" "%25DEST_DIR%25" /Y
-xcopy "%25CS_FILES%25" "%25DEST_DIR%25" /Y
-xcopy "%25DATA_DIR%25" "%25DEST_DIR%25" /Y /E /I
-</PostBuildEvent>
-  </PropertyGroup>
 </Project>
