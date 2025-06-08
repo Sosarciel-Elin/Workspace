@@ -311,11 +311,11 @@ public static class FactionBranch_DailyOutcome_Patch {
 
 
 
-[HarmonyPatch(typeof(Chara))]
-[HarmonyPatch(nameof(Chara.MakeEgg))]
+[HarmonyPatch(typeof(Card))]
+[HarmonyPatch(nameof(Card.MakeEgg))]
 [HarmonyPatch(new[] { typeof(bool), typeof(int), typeof(bool) })]
-public static class Chara_MakeEgg_Patch {
-    public static bool Prefix(Chara __instance, bool effect, int num, bool addToZone, ref Thing __result) {
+public static class Card_MakeEgg_Patch {
+    public static bool Prefix(Card __instance, bool effect, int num, bool addToZone, ref Thing __result) {
         int fertilizedEggChance = BBUtils.FertilizedEggChance.Value;
         if (fertilizedEggChance <= 0)
             return true;
