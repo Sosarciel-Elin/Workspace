@@ -2,4 +2,4 @@ Solution/*/bin/
 Solution/*/obj/
 .vs/
 NodeJsTool
-NodeJsTool1
+Solution/Directory.Build.props
