@@ -313,9 +313,9 @@ public static class FactionBranch_DailyOutcome_Patch {
 
 [HarmonyPatch(typeof(Card))]
 [HarmonyPatch(nameof(Card.MakeEgg))]
-[HarmonyPatch(new[] { typeof(bool), typeof(int), typeof(bool) })]
+[HarmonyPatch(new[] { typeof(bool), typeof(int), typeof(bool), typeof(int), typeof(BlessedState) })]
 public static class Card_MakeEgg_Patch {
-    public static bool Prefix(Card __instance, bool effect, int num, bool addToZone, ref Thing __result) {
+    public static bool Prefix(Card __instance, bool effect, int num, bool addToZone, int fertChance, BlessedState? state,  ref Thing __result) {
         int fertilizedEggChance = BBUtils.FertilizedEggChance.Value;
         if (fertilizedEggChance <= 0)
             return true;
