@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>Remove Faith Limit for Faction Equipment</title>
+  <id>GodArtifactLimitRemoveModVersion</id>
+  <author>zwa73</author>
+  <loadPriority>100</loadPriority>
+  <version>0.23.17</version>
+  <description>这个mod会移除任何装备的 派系词条 的生效条件 (目前实际只有玩家自己信仰的条件) 
+
+这将使玩家在信仰任意神时都能正常的对全队启用神器效果
+
+不同于 'God Artifact Limit Remove' 此mod是通过让生效条件永久为真达成目的, 同时不会改变词条类型
+但也不会检测物品id来针对每个神器处理, 如有特殊需求请订阅 'God Artifact Limit Remove' id=3364742845
+
+！！！注意: 安装/卸载 此mod时请先确保玩家及友军身上任何有派系效果的装备已被脱下, 避免潜在的属性错误隐患！！！
+
+
+This mod removes the activation conditions for faction-related effects of any equipment (currently only the player's own faith condition)
+
+This change allows players to enable artifact effects for their entire team regardless of the deity they worship
+
+Unlike 'God Artifact Limit Remove', this mod achieves its purpose by permanently setting the condition to true without altering the effect type
+However, it does not check the item ID to handle each artifact individually
+If you have special needs, please subscribe to 'God Artifact Limit Remove' id=3364742845
+
+！！！Warning: When installing/uninstalling this mod, please ensure that any equipment with faction effects on the player and allies has been unequipped to avoid potential attribute errors！！！
+  </description>
+</Meta>
