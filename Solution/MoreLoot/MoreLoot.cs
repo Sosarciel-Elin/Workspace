@@ -46,7 +46,7 @@ class Chara_TryDropBossLoot_Patch {
             return true;
 		for(var i=0;i<extDrop;i++){
 			//Msg.Say("Chara_TryDropBossLoot_Patch for "+i);
-			Point point = __instance.pos.GetNearestPoint(allowBlock: true, allowChara: false, allowInstalled: false, ignoreCenter: true) ?? __instance.pos;
+			Point point = __instance.pos.GetNearestPoint(allowBlock: true, allowChara: false, allowInstalled: false, ignoreCenter: true, minRadius:0) ?? __instance.pos;
 			int num = 0;
 			TreasureType type = TreasureType.BossQuest;
 			if (EClass._zone.Boss == __instance){
