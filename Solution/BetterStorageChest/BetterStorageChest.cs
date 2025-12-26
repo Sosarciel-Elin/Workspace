@@ -6,6 +6,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
+using B83.Win32;
+using static UnityEngine.UI.GridLayoutGroup;
 
 
 [BepInPlugin("sosarciel.betterstoragechest", "BetterStorageChest", "1.0.0.0")]
@@ -99,9 +101,9 @@ public static class TraitWrench_Upgrade_Patch{
 //}
 
 [HarmonyPatch(typeof(TraitMagicChest))]
-[HarmonyPatch(nameof(TraitMagicChest.Electricity))]
+[HarmonyPatch(nameof(TraitMagicChest.OriginalElectricity))]
 [HarmonyPatch(MethodType.Getter)]
-public static class TraitMagicChest_Electricity_Getter_Patch {
+public static class TraitMagicChest_OriginalElectricity_Getter_Patch {
     public static void Postfix(TraitMagicChest __instance, ref int __result) {
         if (BSUtils.EnergyConsumptionMultiplier.Value != 1f) {
             var mul = BSUtils.EnergyConsumptionMultiplier.Value;
@@ -142,7 +144,7 @@ public static class TraitMagicChest_CanSearchContent_Getter_Patch{
 public static class UIInventory_Sort_Patch{
 	public static bool Prefix(UIInventory __instance, bool redraw){
 		if(!BSUtils.UseDictionaryBasedMerge.Value) return true;
-        UIList.SortMode i = __instance.IsShop
+        UIList.SortMode m = __instance.IsShop
             ? EMono.player.pref.sortInvShop
             : (__instance.IsAdvSort
                 ? __instance.window.saveData.sortMode
@@ -195,30 +197,16 @@ public static class UIInventory_Sort_Patch{
                 thing3.invX = -1;
             }
 
-            thing3.SetSortVal(i, __instance.owner.currency);
             num++;
         }
 
-		#region 排序
-        //bool flag2 = (__instance.IsShop ? EMono.player.pref.sort_ascending_shop : EMono.player.pref.sort_ascending);
-        bool flag2 = __instance.IsShop
-            ? EMono.player.pref.sort_ascending_shop
-            : (__instance.IsAdvSort
-                ? __instance.window.saveData.sort_ascending
-                : EMono.player.pref.sort_ascending);
-		if(i == UIList.SortMode.ByName){
-			__instance.owner.Container.things.Sort(delegate (Thing a, Thing b){
-				if (flag2) return string.Compare(a.GetName(NameStyle.FullNoArticle, 1), b.GetName(NameStyle.FullNoArticle, 1));
-				return string.Compare(b.GetName(NameStyle.FullNoArticle, 1), a.GetName(NameStyle.FullNoArticle, 1));
-			});
-		}
-        else{
-			__instance.owner.Container.things.Sort(delegate (Thing a, Thing b){
-				if (a.sortVal == b.sortVal) return b.SecondaryCompare(i, a);
-				return (!flag2) ? (a.sortVal - b.sortVal) : (b.sortVal - a.sortVal);
-			});
-		}
-		#endregion
+        #region 排序
+        __instance.owner.Container.things.Sort(m, __instance.IsShop 
+            ? EMono.player.pref.sort_ascending_shop 
+            : (__instance.IsAdvSort 
+                ? __instance.window.saveData.sort_ascending 
+                : EMono.player.pref.sort_ascending));
+        #endregion
 
 
         if (!__instance.UseGrid){

@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using System;
 using System.Collections.Generic;
 
 
@@ -17,9 +18,9 @@ public class AnyRaceCanBeAdam : BaseUnityPlugin {
 
 [HarmonyPatch(typeof(FoodEffect))]
 [HarmonyPatch(nameof(FoodEffect.Proc))]
-[HarmonyPatch(new [] { typeof(Chara),typeof(Thing) })]
+[HarmonyPatch(new [] { typeof(Chara), typeof(Thing), typeof(bool) })]
 class FoodEffect_Proc_Patch {
-	public static void Postfix(Chara c, Thing food) {
+	public static void Postfix(Chara c, Thing food, bool consume) {
         bool flag3 = food.HasElement(709);
         bool flag5 = food.IsDecayed || flag3;
 		if (flag5 && !c.HasElement(480))
