@@ -111,7 +111,7 @@ class ElementContainer_AddNote_Patch_PV {
             case ElementContainer.NoteMode.CharaMakeAttributes:
                 list.Sort((Element a, Element b) => a.GetSortVal(UIList.SortMode.ByElementParent) - b.GetSortVal(UIList.SortMode.ByElementParent));
                 break;
-            case ElementContainer.NoteMode.Trait:
+            case ElementContainer.NoteMode.BonusTrait:
                 list.Sort((Element a, Element b) => ElementContainer.GetSortVal(b) - ElementContainer.GetSortVal(a));
                 break;
             default:
@@ -126,7 +126,7 @@ class ElementContainer_AddNote_Patch_PV {
 				case ElementContainer.NoteMode.Domain:
 					continue;
                 case ElementContainer.NoteMode.Default:
-                case ElementContainer.NoteMode.Trait:
+                case ElementContainer.NoteMode.BonusTrait:
                     {
                         bool flag = e.source.tag.Contains("common");
                         string categorySub = e.source.categorySub;
