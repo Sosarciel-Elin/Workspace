@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyRaceCanBeAdam", "AnyRace
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodArtifactLimitRemoveModVersion", "GodArtifactLimitRemoveModVersion\GodArtifactLimitRemoveModVersion.csproj", "{63BFF79B-670C-4B72-8993-0D483753CA73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriticalSureHit", "CriticalSureHit\CriticalSureHit.csproj", "{D3D835F2-FD4A-4081-AB29-192419C694F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{63BFF79B-670C-4B72-8993-0D483753CA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63BFF79B-670C-4B72-8993-0D483753CA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63BFF79B-670C-4B72-8993-0D483753CA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3D835F2-FD4A-4081-AB29-192419C694F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3D835F2-FD4A-4081-AB29-192419C694F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3D835F2-FD4A-4081-AB29-192419C694F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3D835F2-FD4A-4081-AB29-192419C694F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
