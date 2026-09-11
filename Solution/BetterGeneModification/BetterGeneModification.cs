@@ -268,15 +268,15 @@ public static class DNA_slot_Patch{
 
 [HarmonyPatch(typeof(Card))]
 [HarmonyPatch(nameof(Card.DamageHP))]
-[HarmonyPatch(new[] { typeof(int),typeof(int),typeof(int),typeof(AttackSource),typeof(Card),typeof(bool), typeof(Thing), typeof(Chara) })]
+[HarmonyPatch(new[] { typeof(long), typeof(int), typeof(int), typeof(AttackSource), typeof(Card), typeof(bool), typeof(Thing), typeof(Chara), typeof(int) })]
 public static class Card_DamageHP_Patch{
-    public static bool Prefix(Card __instance, ref int dmg, int ele, int eleP, AttackSource attackSource, Card origin, bool showEffect, Thing weapon, Chara originalTarget) {
+    public static bool Prefix(Card __instance, ref long dmg, int ele, int eleP, AttackSource attackSource, Card origin, bool showEffect, Thing weapon, Chara originalTarget, int resistPenetrationLevel) {
         var modifyMetalDamageCalculation = BGMUtils.ModifyMetalDamageCalculation.Value;
         if(!modifyMetalDamageCalculation) return true;
 
         if (__instance.HasElement(1218) & modifyMetalDamageCalculation){
             float defp = 1000f / (1000 - __instance.Evalue(1218));
-            dmg = (int)(dmg * (defp/10));
+            dmg = (long)(dmg * (defp / 10));
         }
         return true;
     }

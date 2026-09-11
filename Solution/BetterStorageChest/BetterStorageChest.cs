@@ -205,7 +205,8 @@ public static class UIInventory_Sort_Patch{
             ? EMono.player.pref.sort_ascending_shop 
             : (__instance.IsAdvSort 
                 ? __instance.window.saveData.sort_ascending 
-                : EMono.player.pref.sort_ascending));
+                : EMono.player.pref.sort_ascending),
+            __instance.owner.currency);
         #endregion
 
 
